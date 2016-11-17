@@ -4,7 +4,7 @@ import co.edu.udistrital.poo.battleship.bizlogic.Player.Color;
 
 public class Game {
 	
-	public enum GameState { FINISHED, INGAME, PLACINGSHIPS, NOTBEGUN }
+	public enum GameState { FINISHED, INGAME, PLACINGSHIPS, NOTBEGUN, TEST }
 	public enum GameShipsMax { 
 		CARRIER     (1), 
 		BATTLESHIP  (1), 
