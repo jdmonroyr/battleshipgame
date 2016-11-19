@@ -210,4 +210,18 @@ public class Model implements Runnable{
 		return sistema;
 	}
 	
+	public void initServer(){
+		
+		try{
+			socketPlayer = new SocketPlayer();
+			socketPlayer.initServerConnection();
+			socketPlayer.waitForConnection();
+			
+		} catch (Exception e){
+			System.out.println("ERROR: " + e.getMessage());
+		}
+		
+		getMainWindown().lblStatusText.setText("Esperando oponente...");
+	}
+	
 }
