@@ -44,7 +44,7 @@ public class SocketPlayer {
 			System.out.println("esperando conexión...");
 			player = sc.accept();
 			System.out.println("Player2 se ha conectado...");
-			sendMessage("CON", "JOSE", null);
+			//sendMessage("CON", "JOSE", null);
 			closeConnection();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -70,7 +70,16 @@ public class SocketPlayer {
 					}
 				}
 				System.out.println("encabezado: "+encabezado+" - comando: "+comando+"- param1: "+param1+" - param2: "+param2);
+				switch (comando) {
+				case "CON":
+					//Update vista
+					break;
+
+				default:
+					break;
+				}
 			}
+			
 			else {
 				System.out.println("ERROR DE CONEXIÓN");
 			}
@@ -98,7 +107,7 @@ public class SocketPlayer {
 		try {
 			salida = new DataOutputStream(player.getOutputStream());
 			salida.write(msj.getBytes());
-			readMessage();
+			System.out.println(msj);
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}

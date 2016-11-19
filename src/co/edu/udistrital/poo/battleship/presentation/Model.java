@@ -225,6 +225,7 @@ public class Model implements Runnable{
 			socketPlayer = new SocketPlayer();
 			socketPlayer.initServerConnection();
 			socketPlayer.waitForConnection();
+			socketPlayer.readMessage();
 			
 		} catch (Exception e){
 			System.out.println("ERROR: " + e.getMessage());
