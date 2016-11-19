@@ -47,24 +47,22 @@ public class Model implements Runnable{
 		enemyBoard = activePlayer.getEnemyBoard();
 		ownBoard = activePlayer.getOwnBoard();
 		
-		getMainWindown().getLblCarrierQty().setText(String.valueOf(Game.GameShipsMax.CARRIER.getQuantity()));
-		getMainWindown().getLblBattleshipQty().setText(String.valueOf(Game.GameShipsMax.BATTLESHIP.getQuantity()));
-		getMainWindown().getLblCruiserQty().setText(String.valueOf(Game.GameShipsMax.CRUISER.getQuantity()));
-		getMainWindown().getLblSubmarineQty().setText(String.valueOf(Game.GameShipsMax.SUBMARINE.getQuantity()));
-		getMainWindown().getLblDestroyerQty().setText(String.valueOf(Game.GameShipsMax.DESTROYER.getQuantity()));
+		getMainWindown().lblBattleshipQty.setText(String.valueOf(Game.GameShipsMax.BATTLESHIP.getQuantity()));
+		getMainWindown().lblCruiserQty.setText(String.valueOf(Game.GameShipsMax.CRUISER.getQuantity()));
+		getMainWindown().lblCruiserQty.setText(String.valueOf(Game.GameShipsMax.SUBMARINE.getQuantity()));
+		getMainWindown().lblDestroyerQty.setText(String.valueOf(Game.GameShipsMax.DESTROYER.getQuantity()));
 		
-		getMainWindown().getLblLengthCarrier().setText(String.valueOf(ShipType.CARRIER.getLength()));
-		getMainWindown().getLblLengthBattleship().setText(String.valueOf(ShipType.BATTLESHIP.getLength()));
-		getMainWindown().getLblLengthCruiser().setText(String.valueOf(ShipType.CRUISER.getLength()));
-		getMainWindown().getLblLengthSubmarine().setText(String.valueOf(ShipType.SUBMARINE.getLength()));
-		getMainWindown().getLblLengthDestroyer().setText(String.valueOf(ShipType.DESTROYER.getLength()));
+		getMainWindown().lblLengthBattleship.setText(String.valueOf(ShipType.BATTLESHIP.getLength()));
+		getMainWindown().lblLengthCruiser.setText(String.valueOf(ShipType.CRUISER.getLength()));
+		getMainWindown().lblLengthSubmarine.setText(String.valueOf(ShipType.SUBMARINE.getLength()));
+		getMainWindown().lblLengthDestroyer.setText(String.valueOf(ShipType.DESTROYER.getLength()));
 	}
 	
 	
 	protected void draw(){
 		
-		Canvas ownBoardCanvas = getMainWindown().getOwnBoardCanvas();
-		Canvas enemyBoardCanvas = getMainWindown().getEnemyBoardCanvas();
+		Canvas ownBoardCanvas = getMainWindown().ownBoardCanvas;
+		Canvas enemyBoardCanvas = getMainWindown().enemyBoardCanvas;
 		
 		Graphics pencilOwnBoardCanvas = ownBoardCanvas.getGraphics();
 		dblBufferOwnBoardCanvas = new BufferedImage(ownBoardCanvas.getWidth(), ownBoardCanvas.getHeight(), BufferedImage.TYPE_INT_ARGB);
@@ -141,27 +139,27 @@ public class Model implements Runnable{
 		
 		Ship ship = null;
 		
-		if(getMainWindown().getRdBtnCarrier().isSelected() == true){
+		/*if(getMainWindown().rdBtnCarrier.isSelected() == true){
 			if(game.areCarriersAvailable()){
 				ship = new Ship(ShipType.CARRIER);
 			}
-		}
-		else if(getMainWindown().getRdBtnBattleship().isSelected() == true)
+		}*/
+		if(getMainWindown().rdBtnBattleship.isSelected() == true)
 			ship = new Ship(ShipType.BATTLESHIP);
-		else if (getMainWindown().getRdBtnCruiser().isSelected() == true)
+		else if (getMainWindown().rdBtnCruiser.isSelected() == true)
 			ship = new Ship(ShipType.CRUISER);
-		else if(getMainWindown().getRdBtnSubmarine().isSelected() == true)
+		else if(getMainWindown().rdBtnSubmarine.isSelected() == true)
 			ship = new Ship(ShipType.SUBMARINE);
-		else if(getMainWindown().getRdBtnDestroyer().isSelected() == true)
+		else if(getMainWindown().rdBtnDestroyer.isSelected() == true)
 			ship = new Ship(ShipType.DESTROYER);
 			
 		Player activePlayer = game.getPlayerInTurn();
 		int xCell = xPos / 40;
 		int yCell = yPos / 40;
 		
-		if(getMainWindown().getRdbtnHorizontal().isSelected() == true)
+		if(getMainWindown().rdbtnHorizontal.isSelected() == true)
 			ship.setOrientation(ShipOrientation.HORIZONTAL);
-		else if(getMainWindown().getRdbtnVertical().isSelected() == true)
+		else if(getMainWindown().rdbtnVertical.isSelected() == true)
 			ship.setOrientation(ShipOrientation.VERTICAL);
 		else
 			ship.setOrientation(ShipOrientation.HORIZONTAL);
