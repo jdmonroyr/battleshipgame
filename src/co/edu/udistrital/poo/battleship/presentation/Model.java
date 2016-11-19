@@ -15,7 +15,6 @@ import co.edu.udistrital.poo.battleship.bizlogic.Player;
 import co.edu.udistrital.poo.battleship.bizlogic.Ship;
 import co.edu.udistrital.poo.battleship.bizlogic.Sistema;
 import co.edu.udistrital.poo.battleship.conect.SocketPlayer;
-import co.edu.udistrital.poo.battleship.conect.SocketPlayer1;
 
 public class Model implements Runnable{
 	
