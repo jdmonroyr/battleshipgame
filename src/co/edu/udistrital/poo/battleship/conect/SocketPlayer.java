@@ -7,17 +7,23 @@ import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import co.edu.udistrital.poo.battleship.presentation.Model;
+
 public class SocketPlayer {
 
 	final int PUERTO=5000;
 	final String ENCABEZADO = "BNAVAL";
 	final String COMANDO_CON ="CON";
 	final String HOST= "127.0.0.1";
+	private Model model;
 	
 	ServerSocket sc;
 	Socket player;
 	DataOutputStream salida;
 	BufferedReader entrada;
+	public SocketPlayer(Model model){
+		this.model = model;	
+	}
 	
 	public void initClientConnection(String playerName, String hostName, int port) {
 		
@@ -72,9 +78,8 @@ public class SocketPlayer {
 				System.out.println("encabezado: "+encabezado+" - comando: "+comando+"- param1: "+param1+" - param2: "+param2);
 				switch (comando) {
 				case "CON":
-					//Update vista
+					model.setOpponentName(param1);
 					break;
-
 				default:
 					break;
 				}

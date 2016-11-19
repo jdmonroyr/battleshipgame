@@ -212,8 +212,9 @@ public class Model implements Runnable{
 	
 	public void initClient(String hostName,String port, String playerName){
 		try {
-			socketPlayer = new SocketPlayer();
+			socketPlayer = new SocketPlayer(this);
 			socketPlayer.initClientConnection(playerName, hostName, Integer.parseInt(port));
+			socketPlayer.readMessage();
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -222,7 +223,7 @@ public class Model implements Runnable{
 	public void initServer(){
 		
 		try{
-			socketPlayer = new SocketPlayer();
+			socketPlayer = new SocketPlayer(this);
 			socketPlayer.initServerConnection();
 			socketPlayer.waitForConnection();
 			socketPlayer.readMessage();
