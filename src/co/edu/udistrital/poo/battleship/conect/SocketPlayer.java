@@ -51,7 +51,6 @@ public class SocketPlayer {
 			player = sc.accept();
 			System.out.println("Player2 se ha conectado...");
 			//sendMessage("CON", "JOSE", null);
-			closeConnection();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
