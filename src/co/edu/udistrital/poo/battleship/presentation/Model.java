@@ -244,8 +244,8 @@ public class Model implements Runnable{
 		
 		try{
 			socketPlayer = new SocketPlayer(this);
-			socketPlayer.initServerConnection(playerName);
-			socketPlayer.waitForConnection();
+			socketPlayer.initServerConnection();
+			socketPlayer.waitForConnection(playerName);
 			socketPlayer.readMessage();
 			
 		} catch (Exception e){

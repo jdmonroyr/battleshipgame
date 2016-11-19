@@ -35,22 +35,21 @@ public class SocketPlayer {
 		}
 	}
 	
-	public void initServerConnection(String playerName) {
+	public void initServerConnection() {
 		try {
 			sc = new ServerSocket(PUERTO);
 			player = new Socket();
-			sendMessage(COMANDO_CON, playerName, null);
 		} catch (Exception e) {
 		System.out.println(e.getMessage());
 		}
 	}
 	
-	public void waitForConnection(){
+	public void waitForConnection(String playerName){
 		try {
 			System.out.println("esperando conexión...");
 			player = sc.accept();
 			System.out.println("Player2 se ha conectado...");
-			//sendMessage("CON", "JOSE", null);
+			sendMessage(COMANDO_CON, playerName, null);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
