@@ -58,6 +58,7 @@ public class SocketPlayer {
 
 	public void readMessage() {
 		try {
+			while(true){
 			entrada = new BufferedReader(new InputStreamReader(player.getInputStream()));
 			String encabezado = "", comando="", param1="", param2="";
 			String[] mensajeEntrada, cuerpo;
@@ -85,6 +86,7 @@ public class SocketPlayer {
 			
 			else {
 				System.out.println("ERROR DE CONEXIÓN");
+			}
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
