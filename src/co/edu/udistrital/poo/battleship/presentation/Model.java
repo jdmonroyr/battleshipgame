@@ -59,6 +59,26 @@ public class Model implements Runnable{
 		getMainWindown().lblLengthCruiser.setText(String.valueOf(ShipType.CRUISER.getLength()));
 		getMainWindown().lblLengthSubmarine.setText(String.valueOf(ShipType.SUBMARINE.getLength()));
 		getMainWindown().lblLengthDestroyer.setText(String.valueOf(ShipType.DESTROYER.getLength()));
+		
+		getMainWindown().rdBtnBattleship.setEnabled(false);
+		getMainWindown().rdBtnCruiser.setEnabled(false);
+		getMainWindown().rdBtnSubmarine.setEnabled(false);
+		getMainWindown().rdBtnDestroyer.setEnabled(false);
+		
+		getMainWindown().rdbtnHorizontal.setEnabled(false);
+		getMainWindown().rdbtnVertical.setEnabled(false);
+	}
+	
+	public void startPlacingShips(){
+		
+		getMainWindown().rdBtnBattleship.setEnabled(true);
+		getMainWindown().rdBtnCruiser.setEnabled(true);
+		getMainWindown().rdBtnSubmarine.setEnabled(true);
+		getMainWindown().rdBtnDestroyer.setEnabled(true);
+		
+		getMainWindown().rdbtnHorizontal.setEnabled(true);
+		getMainWindown().rdbtnVertical.setEnabled(true);
+		
 	}
 	
 	
