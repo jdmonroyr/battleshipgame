@@ -11,6 +11,7 @@ public class SocketPlayer {
 
 	final int PUERTO=5000;
 	final String ENCABEZADO = "BNAVAL";
+	final String COMANDO_CON ="CON";
 	final String HOST= "127.0.0.1";
 	
 	ServerSocket sc;
@@ -18,11 +19,12 @@ public class SocketPlayer {
 	DataOutputStream salida;
 	BufferedReader entrada;
 	
-	public void initClientConnection() {
+	public void initClientConnection(String NombreCliente) {
 		//String msg = "Yo me llamo José";
 		
 		try {
-		player = new Socket(HOST, PUERTO);		
+		player = new Socket(HOST, PUERTO);
+		sendMessage(COMANDO_CON, NombreCliente, null);
 		} catch (Exception e) {
 		System.out.println(e.getMessage());
 		}
