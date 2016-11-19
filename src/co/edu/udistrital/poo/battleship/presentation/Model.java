@@ -234,4 +234,12 @@ public class Model implements Runnable{
 		getMainWindown().lblStatusText.setText("Esperando oponente...");
 	}
 	
+	public void setPlayerName(String name){
+		getMainWindown().lblPlayerNameText.setText(name);
+	}
+	
+	public void setOpponentName(String name){
+		getMainWindown().lblOpponentsNameText.setText(name);
+	}
+	
 }
