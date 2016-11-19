@@ -27,7 +27,7 @@ public class Model implements Runnable{
 	private Board enemyBoard;
 	private Board ownBoard;
 	private SocketPlayer socketPlayer;
-	
+	//FABIO
 	private int xPos = 0;
 	private int yPos = 0;
 	
