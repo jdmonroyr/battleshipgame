@@ -376,15 +376,15 @@ public class MainWindow extends JFrame {
 		label_8.setBounds(595, 68, 56, 16);
 		contentPane.add(label_8);
 
-		JLabel label_19 = new JLabel("9");
-		label_19.setHorizontalAlignment(SwingConstants.RIGHT);
-		label_19.setBounds(635, 68, 56, 16);
-		contentPane.add(label_19);
+		JLabel label_9 = new JLabel("9");
+		label_9.setHorizontalAlignment(SwingConstants.RIGHT);
+		label_9.setBounds(635, 68, 56, 16);
+		contentPane.add(label_9);
 
-		JLabel label_20 = new JLabel("10");
-		label_20.setHorizontalAlignment(SwingConstants.RIGHT);
-		label_20.setBounds(680, 68, 56, 16);
-		contentPane.add(label_20);
+		JLabel label_10 = new JLabel("10");
+		label_10.setHorizontalAlignment(SwingConstants.RIGHT);
+		label_10.setBounds(680, 68, 56, 16);
+		contentPane.add(label_10);
 
 		// Ship Types
 
@@ -677,7 +677,11 @@ public class MainWindow extends JFrame {
 		int result = JOptionPane.showConfirmDialog(this, panel, "Create Game", JOptionPane.OK_CANCEL_OPTION,
 				JOptionPane.PLAIN_MESSAGE);
 		if (result == JOptionPane.OK_OPTION) {
-			System.out.println("Player name: " + playerName.getText());
+			if(playerName.getText().isEmpty()){
+				playerName.setText("player 1");
+			}
+			lblPlayerNameText.setText(playerName.getText());
+			getModel().initServer();
 		} else {
 			System.out.println("Cancelled");
 		}
