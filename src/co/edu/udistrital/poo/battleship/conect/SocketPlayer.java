@@ -19,12 +19,11 @@ public class SocketPlayer {
 	DataOutputStream salida;
 	BufferedReader entrada;
 	
-	public void initClientConnection(String NombreCliente) {
-		//String msg = "Yo me llamo José";
+	public void initClientConnection(String playerName, String hostName, int port) {
 		
 		try {
-		player = new Socket(HOST, PUERTO);
-		sendMessage(COMANDO_CON, NombreCliente, null);
+		player = new Socket(hostName, port);
+		sendMessage(COMANDO_CON, playerName, null);
 		} catch (Exception e) {
 		System.out.println(e.getMessage());
 		}

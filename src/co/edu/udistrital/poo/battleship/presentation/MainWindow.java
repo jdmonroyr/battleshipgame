@@ -704,6 +704,7 @@ public class MainWindow extends JFrame {
 		int result = JOptionPane.showConfirmDialog(this, panelPlayerTwo, "Join Game", JOptionPane.OK_CANCEL_OPTION,
 				JOptionPane.PLAIN_MESSAGE);
 		if (result == JOptionPane.OK_OPTION) {
+			getModel().initClient(serverAddress.getText(), serverPort.getText(), playerName.getText());
 			System.out.println("Player name: " + playerName.getText());
 			System.out.println("Server Address: " + serverAddress.getText() + ":" + serverPort);
 		} else {

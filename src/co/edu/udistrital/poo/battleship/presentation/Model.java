@@ -210,6 +210,15 @@ public class Model implements Runnable{
 		return sistema;
 	}
 	
+	public void initClient(String hostName,String port, String playerName){
+		try {
+			socketPlayer = new SocketPlayer();
+			socketPlayer.initClientConnection(playerName, hostName, Integer.parseInt(port));
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+	
 	public void initServer(){
 		
 		try{
