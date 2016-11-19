@@ -681,7 +681,7 @@ public class MainWindow extends JFrame {
 				playerName.setText("player 1");
 			}
 			lblPlayerNameText.setText(playerName.getText());
-			getModel().initServer();
+			getModel().initServer(playerName.getText());
 		} else {
 			System.out.println("Cancelled");
 		}

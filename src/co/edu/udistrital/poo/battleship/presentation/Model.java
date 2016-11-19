@@ -220,11 +220,11 @@ public class Model implements Runnable{
 		}
 	}
 	
-	public void initServer(){
+	public void initServer(String playerName){
 		
 		try{
 			socketPlayer = new SocketPlayer(this);
-			socketPlayer.initServerConnection();
+			socketPlayer.initServerConnection(playerName);
 			socketPlayer.waitForConnection();
 			socketPlayer.readMessage();
 			

@@ -35,11 +35,11 @@ public class SocketPlayer {
 		}
 	}
 	
-	public void initServerConnection() {
+	public void initServerConnection(String playerName) {
 		try {
 			sc = new ServerSocket(PUERTO);
 			player = new Socket();
-			
+			sendMessage(COMANDO_CON, playerName, null);
 		} catch (Exception e) {
 		System.out.println(e.getMessage());
 		}
