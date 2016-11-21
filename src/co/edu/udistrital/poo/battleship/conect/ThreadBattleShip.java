@@ -8,4 +8,9 @@ public interface ThreadBattleShip {
 	public void initClientConnection();
 
 	public void waitForConnection();
+	
+	public void setEnemyFire(String posX, String posY);
+	
+	public void setOwnFire();
+	
 }
