@@ -483,6 +483,9 @@ public class Model implements Runnable{
 			//if(player.isInTurn())
 				//player.setTurn(false);
 			
-			
+		}
+		
+		public void setOwnFire(int xCell, int yCell){
+			//hiloJuego.setOwnFire(xCell, yCell);
 		}
 }
