@@ -474,6 +474,26 @@ public class Model implements Runnable{
 			if(isAnyShipAlive == false)
 				attackResult = AttackResult.GAME_OVER;
 			
+			getMainWindown().lblShipsQty.setText(String.valueOf(player.getShips().size()));
+			
+			int shipsAlive = 0;
+			int shipsSunk = 0;
+			
+			for(Ship ship : player.getShips()){
+				if(ship.getStatus() == ShipStatus.FLOATING){
+					shipsAlive++;
+				}
+				else if(ship.getStatus() == ShipStatus.SUNK){
+					shipsSunk++;
+				}
+			}
+			
+			getMainWindown().lblShipsAliveQty.setText(String.valueOf(shipsAlive));
+			getMainWindown().lblShipsSunkQty.setText(String.valueOf(shipsSunk));
+			
+			if(shipsSunk == player.getShips().size()){
+				showErrorPopUp("Ud ha perdido la partida");
+			}
 			
 			return attackResult;
 		}
@@ -482,6 +502,10 @@ public class Model implements Runnable{
 			
 			Player player = game.getPlayerForGame();
 			player.updateAfterFire(lastXShot, lastYShot, attackResult);
+			
+			getMainWindown().lblShotsQty.setText(String.valueOf(player.getShots()));
+			getMainWindown().lblHitsQty.setText(String.valueOf(player.getHits()));
+			getMainWindown().lblMissesQty.setText(String.valueOf(player.getMisses()));
 			
 			if(attackResult == AttackResult.MISS){
 				if(player.isInTurn())
