@@ -11,7 +11,7 @@ import co.edu.udistrital.poo.battleship.presentation.Model;
 public class SocketPlayer {
 
 	final String ENCABEZADO = "BNAVAL";
-	final static String COMANDO_CON ="CON", COMANDO_LIS ="LIS";
+	final static String COMANDO_CON ="CON", COMANDO_LIS ="LIS", COMANDO_ATK= "ATK";
 	private Model model;
 	
 	ServerSocket sc;
@@ -48,6 +48,13 @@ public class SocketPlayer {
 				case "LIS":
 					if (param1.equals("OK")) {
 						model.beginGame();	
+					}
+					break;
+				case "ATK":
+					if(param1.equals("OK")){
+						
+					}else if(!param1.equals("NK")){
+						
 					}
 					break;
 				default:

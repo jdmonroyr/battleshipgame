@@ -59,4 +59,13 @@ public void initClientConnection() {
 	
 	}
 
+	
+	public void setEnemyFire(String posX, String posY) {
+		socketPlayer.sendMessage(SocketPlayer.COMANDO_LIS, posX, posY, salida);		
+	}
+
+	public void setOwnFire() {
+		
+	}
+
 }
