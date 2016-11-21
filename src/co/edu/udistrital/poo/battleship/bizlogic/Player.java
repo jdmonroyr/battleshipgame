@@ -9,6 +9,8 @@ import co.edu.udistrital.poo.battleship.bizlogic.Ship.ShipType;
 
 public class Player {
 	
+	public enum PlacingShipsStatus { OK, COLLISION, MAXNUM }
+	
 	private String name;
 	
 	private boolean isInTurn;
@@ -109,7 +111,7 @@ public class Player {
 		this.enemyBoard = enemyBoard;
 	}
 	
-	public boolean markBoat(int xPos, int yPos, Ship ship) {
+	public PlacingShipsStatus markBoat(int xPos, int yPos, Ship ship) {
 		
 		int counterShips = 0;
 		
@@ -134,15 +136,17 @@ public class Player {
 		
 		
 		if(counterShips >= gameShipTypeMax.getQuantity())
-			return false;
+			return PlacingShipsStatus.MAXNUM;
 		
 		
 		if(ownBoard.markBoat(xPos, yPos, ship)){
 			ships.add(ship);
-			return true;
+			return PlacingShipsStatus.OK;
+		}
+		else{
+			return PlacingShipsStatus.COLLISION;
 		}
 		
-		return false;
 	}
 	
 	public int getShipNumberForType(ShipType shipType){

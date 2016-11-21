@@ -19,6 +19,7 @@ import co.edu.udistrital.poo.battleship.bizlogic.Ship.ShipType;
 import co.edu.udistrital.poo.battleship.bizlogic.Game;
 import co.edu.udistrital.poo.battleship.bizlogic.Game.GameShipsMax;
 import co.edu.udistrital.poo.battleship.bizlogic.Player;
+import co.edu.udistrital.poo.battleship.bizlogic.Player.PlacingShipsStatus;
 import co.edu.udistrital.poo.battleship.bizlogic.Ship;
 import co.edu.udistrital.poo.battleship.bizlogic.Sistema;
 import co.edu.udistrital.poo.battleship.conect.SocketPlayer;
@@ -107,16 +108,32 @@ public class Model implements Runnable{
 		
 		for (int i = 0; i < ownBoard.getRows(); i++){
 			for(int j= 0; j < ownBoard.getColumns(); j++){
+				
 				if(ownBoard.getCells()[i][j].getState() == CellState.HIT){
 					pencilOwnBoardCanvasDblBuffer.setColor(Color.RED);
 					pencilOwnBoardCanvasDblBuffer.fillRect(i * 40, j * 40, 40, 40);
 				}
+				
 				else if(ownBoard.getCells()[i][j].getState() == CellState.MISS){
 					pencilOwnBoardCanvasDblBuffer.setColor(Color.WHITE);
 					pencilOwnBoardCanvasDblBuffer.fillRect(i * 40, j * 40, 40, 40);
 				}
+				
 				else if(ownBoard.getCells()[i][j].getState() == CellState.BOAT){
-					pencilOwnBoardCanvasDblBuffer.setColor(Color.BLACK);
+					
+					if(ownBoard.getCells()[i][j].getShip().getType() == ShipType.BATTLESHIP){
+						pencilOwnBoardCanvasDblBuffer.setColor(Color.YELLOW);
+					}
+					else if(ownBoard.getCells()[i][j].getShip().getType() == ShipType.CRUISER){
+						pencilOwnBoardCanvasDblBuffer.setColor(Color.GREEN);
+					}
+					else if(ownBoard.getCells()[i][j].getShip().getType() == ShipType.SUBMARINE){
+						pencilOwnBoardCanvasDblBuffer.setColor(Color.CYAN);
+					}
+					else if(ownBoard.getCells()[i][j].getShip().getType() == ShipType.DESTROYER){
+						pencilOwnBoardCanvasDblBuffer.setColor(Color.ORANGE);
+					}
+					
 					pencilOwnBoardCanvasDblBuffer.fillRect(i * 40, j * 40, 40, 40);
 				}
 			}
@@ -195,11 +212,13 @@ public class Model implements Runnable{
 		
 		boolean painted;
 		
-		painted = player.markBoat(xCell, yCell, ship);
+		PlacingShipsStatus placingShipStatus = player.markBoat(xCell, yCell, ship);
 		
-		if(painted == false)
-			showMaxShipsPopUp();
-		else{
+		if(placingShipStatus == PlacingShipsStatus.COLLISION)
+			showErrorPopUp("No es posible posicionar el barco en esa posición.");
+		else if(placingShipStatus == PlacingShipsStatus.MAXNUM)
+			showErrorPopUp("Se ha alcanzado el máxino número de barcos de este tipo.");
+		else if (placingShipStatus == PlacingShipsStatus.OK){
 			int left = 0;
 			if(ship.getType() == ShipType.BATTLESHIP){
 				left = GameShipsMax.BATTLESHIP.getQuantity() - player.getShipNumberForType(ShipType.BATTLESHIP); 
@@ -323,9 +342,9 @@ public class Model implements Runnable{
 		
 	}
 	
-	public void showMaxShipsPopUp(){
+	public void showErrorPopUp(String message){
 		
-		JOptionPane.showMessageDialog(getMainWindown(), "Se ha alcanzado el máximo número de barcos de ese tipo", "Error Message", JOptionPane.ERROR_MESSAGE);
+		JOptionPane.showMessageDialog(getMainWindown(), message, "Error Message", JOptionPane.ERROR_MESSAGE);
 		
 	}
 	
