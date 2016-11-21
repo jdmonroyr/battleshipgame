@@ -355,7 +355,7 @@ public class Model implements Runnable{
 		
 		getMainWindown().lblPlayerNameText.setText(playerName);
 		getMainWindown().lblStatusText.setText("joined game...");
-		
+
 	}
 	
 	public void showErrorPopUp(String message){
@@ -411,6 +411,24 @@ public class Model implements Runnable{
 				//getModel().initClient(serverAddress.getText(), serverPort.getText(), playerName.getText());
 			} else {
 				System.out.println("Cancelled");
+			}
+		}
+		
+		public void beginGame(){
+			
+			int shipsNumber = GameShipsMax.BATTLESHIP.getQuantity() + GameShipsMax.CRUISER.getQuantity() +
+					GameShipsMax.SUBMARINE.getQuantity() + GameShipsMax.DESTROYER.getQuantity();
+			
+			Player player = game.getPlayerForGame();
+			if(player.getShips().size() != shipsNumber){
+				int left = shipsNumber - player.getShips().size();
+				showErrorPopUp("Faltan " + left + " barcos por posicionar.");
+			}
+			else {
+			
+				
+				getMainWindown().enemyBoardCanvas.addMouseListener(getMainWindown().getEnemyBoardCanvasController());
+			// call action command LIS
 			}
 		}
 }
