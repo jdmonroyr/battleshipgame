@@ -1,11 +1,9 @@
 
-import co.edu.udistrital.poo.battleship.conect.SocketPlayer;
 import co.edu.udistrital.poo.battleship.presentation.*;
 
 public class LauncherPlayer1 {
 	
 	private Model myApp;
-	private SocketPlayer player1;	
 	
 	public LauncherPlayer1() {
 		myApp = new Model();

@@ -14,7 +14,8 @@ import co.edu.udistrital.poo.battleship.bizlogic.Game;
 import co.edu.udistrital.poo.battleship.bizlogic.Player;
 import co.edu.udistrital.poo.battleship.bizlogic.Ship;
 import co.edu.udistrital.poo.battleship.bizlogic.Sistema;
-import co.edu.udistrital.poo.battleship.conect.SocketPlayer;
+import co.edu.udistrital.poo.battleship.conect.ThreadCliente;
+import co.edu.udistrital.poo.battleship.conect.ThreadServer;
 
 public class Model implements Runnable{
 	
@@ -26,8 +27,9 @@ public class Model implements Runnable{
 	private Game game = null;
 	private Board enemyBoard;
 	private Board ownBoard;
-	private SocketPlayer socketPlayer;
-
+	private ThreadServer hiloServidor;
+	private ThreadCliente hiloCliente;
+	
 	//FABIO
 
 	// jdm
@@ -232,9 +234,10 @@ public class Model implements Runnable{
 	
 	public void initClient(String hostName,String port, String playerName){
 		try {
-			socketPlayer = new SocketPlayer(this);
-			socketPlayer.initClientConnection(playerName, hostName, Integer.parseInt(port));
-			socketPlayer.readMessage();
+			hiloCliente = new ThreadCliente(this, playerName, hostName, Integer.parseInt(port));
+			hiloCliente.initClientConnection();
+			//socketPlayer.initClientConnection(playerName, hostName, Integer.parseInt(port));
+			//socketPlayer.readMessage();
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -243,11 +246,9 @@ public class Model implements Runnable{
 	public void initServer(String playerName){
 		
 		try{
-			socketPlayer = new SocketPlayer(this);
-			socketPlayer.initServerConnection();
-			socketPlayer.waitForConnection(playerName);
-			socketPlayer.readMessage();
-			
+				hiloServidor = new ThreadServer(this, playerName);
+				hiloServidor.waitForConnection();
+				//socketPlayer.readMessage();
 		} catch (Exception e){
 			System.out.println("ERROR: " + e.getMessage());
 		}

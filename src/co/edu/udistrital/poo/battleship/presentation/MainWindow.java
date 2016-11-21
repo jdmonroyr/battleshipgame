@@ -691,7 +691,7 @@ public class MainWindow extends JFrame {
 
 		JTextField playerName = new JTextField("player 2");
 		JTextField serverAddress = new JTextField("127.0.0.1");
-		JTextField serverPort = new JTextField("50000");
+		JTextField serverPort = new JTextField("5000");
 
 		JPanel panelPlayerTwo = new JPanel(new GridLayout(0, 1));
 		panelPlayerTwo.add(new JLabel("Player Name:"));
