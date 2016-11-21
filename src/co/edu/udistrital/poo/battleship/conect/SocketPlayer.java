@@ -61,8 +61,8 @@ public class SocketPlayer {
 							model.updateEnemyBoard(AttackResult.GAME_OVER);
 						}
 					}else if(!param1.equals("NK")){
-
-						//;
+						model.setOwnFire(Integer.parseInt(param1), Integer.parseInt(param2));
+						
 					}
 					break;
 				default:

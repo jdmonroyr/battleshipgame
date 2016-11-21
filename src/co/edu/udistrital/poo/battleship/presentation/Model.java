@@ -486,6 +486,6 @@ public class Model implements Runnable{
 		}
 		
 		public void setOwnFire(int xCell, int yCell){
-			//hiloJuego.setOwnFire(xCell, yCell);
+			hiloJuego.setOwnFire(xCell, yCell);
 		}
 }

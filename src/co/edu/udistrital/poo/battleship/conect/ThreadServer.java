@@ -76,8 +76,8 @@ public class ThreadServer implements Runnable, ThreadBattleShip{
 
 	}
 
-	public void setOwnFire(String posX, String posY ) {
-		AttackResult ar = model.getFired(Integer.parseInt(posX), Integer.parseInt(posY));
+	public void setOwnFire(int posX, int posY ) {
+		AttackResult ar = model.getFired(posX, posY);
 		String res="";
 		if(ar == AttackResult.MISS){
 			res="0";
