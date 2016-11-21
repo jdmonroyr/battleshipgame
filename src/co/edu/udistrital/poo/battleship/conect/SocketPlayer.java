@@ -46,7 +46,7 @@ public class SocketPlayer {
 					model.setOpponentName(param1);
 					break;
 				case "LIS":
-					if (param1=="OK") {
+					if (param1.equals("OK")) {
 						model.beginGame();	
 					}
 					break;
