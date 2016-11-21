@@ -355,7 +355,7 @@ public class Model implements Runnable{
 		
 		getMainWindown().lblPlayerNameText.setText(playerName);
 		getMainWindown().lblStatusText.setText("joined game...");
-		
+
 	}
 	
 	public void showErrorPopUp(String message){
