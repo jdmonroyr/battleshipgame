@@ -49,14 +49,15 @@ public class Player {
 	
 	////////////////
 	
-	public CellState fire(int xPos, int yPos){
+	public CellState fire(int xPos, int yPos, CellState cellState){
 		
 		Cell cell = enemyBoard.getCell(xPos, yPos);
+		cell.setState(cellState);
 		
 		
 		// Call socket to fire;
 		
-		int max = 2;
+		/*int max = 2;
 		int min = 1;
 		
 		int random = (int )(Math.random() * max + min);
@@ -69,6 +70,8 @@ public class Player {
 			cell.setState(CellState.HIT);
 			System.out.println("HIT!!!");
 		}
+		
+		*/
 		
 		shots++;
 		if(cell.getState() == CellState.HIT)

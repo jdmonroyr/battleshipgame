@@ -255,14 +255,13 @@ public class Model implements Runnable{
 	
 	public void fire(int xPos, int yPos){
 		
-		Player player = game.getPlayerForGame();
-		
 		int xCell = xPos / 40;
 		int yCell = yPos / 40;
 		
-		System.out.println("xCell: " + xCell + " yCell: " + yCell);
+		// send command to fire opponent
 		
-		player.fire(xCell, yCell);
+		Player player = game.getPlayerForGame();
+		player.fire(xCell, yCell, CellState.MISS);
 		
 		getMainWindown().lblShotsQty.setText(String.valueOf(player.getShots()));
 		getMainWindown().lblHitsQty.setText(String.valueOf(player.getHits()));
