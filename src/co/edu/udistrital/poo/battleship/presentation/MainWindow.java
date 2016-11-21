@@ -56,7 +56,7 @@ public class MainWindow extends JFrame {
 	
 	// Game Components
 	
-	JLabel labelShotsQty;
+	JLabel lblShotsQty;
 	JLabel lblHitsQty;
 	JLabel lblMissesQty;
 	JLabel lblShipsQty;
@@ -148,9 +148,9 @@ public class MainWindow extends JFrame {
 		lblPlayerName.setBounds(22, 110, 112, 16);
 		contentPane.add(lblPlayerName);
 
-		lblPlayerNameText = new JLabel("no name yet...");
+		lblPlayerNameText = new JLabel("");
 		lblPlayerNameText.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPlayerNameText.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblPlayerNameText.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblPlayerNameText.setBounds(163, 96, 112, 32);
 		contentPane.add(lblPlayerNameText);
 		
@@ -159,9 +159,9 @@ public class MainWindow extends JFrame {
 		lblOpponentsName.setBounds(24, 139, 144, 23);
 		contentPane.add(lblOpponentsName);
 		
-		lblOpponentsNameText = new JLabel("no opponent...");
+		lblOpponentsNameText = new JLabel("");
 		lblOpponentsNameText.setHorizontalAlignment(SwingConstants.CENTER);
-		lblOpponentsNameText.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblOpponentsNameText.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblOpponentsNameText.setBounds(163, 129, 112, 32);
 		contentPane.add(lblOpponentsNameText);
 		
@@ -170,9 +170,9 @@ public class MainWindow extends JFrame {
 		lblStatus.setBounds(22, 175, 144, 16);
 		contentPane.add(lblStatus);
 		
-		lblStatusText = new JLabel("no status...");
+		lblStatusText = new JLabel("");
 		lblStatusText.setHorizontalAlignment(SwingConstants.CENTER);
-		lblStatusText.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblStatusText.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblStatusText.setBounds(162, 161, 112, 32);
 		contentPane.add(lblStatusText);
 		
@@ -194,17 +194,17 @@ public class MainWindow extends JFrame {
 		lblMisses.setBounds(36, 268, 112, 16);
 		contentPane.add(lblMisses);
 
-		labelShotsQty = new JLabel("3");
-		labelShotsQty.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		labelShotsQty.setBounds(205, 211, 56, 16);
-		contentPane.add(labelShotsQty);
+		lblShotsQty = new JLabel("");
+		lblShotsQty.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblShotsQty.setBounds(205, 211, 56, 16);
+		contentPane.add(lblShotsQty);
 
-		lblHitsQty = new JLabel("2");
+		lblHitsQty = new JLabel("");
 		lblHitsQty.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblHitsQty.setBounds(205, 240, 56, 16);
 		contentPane.add(lblHitsQty);
 
-		lblMissesQty = new JLabel("1");
+		lblMissesQty = new JLabel("");
 		lblMissesQty.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblMissesQty.setBounds(205, 269, 56, 16);
 		contentPane.add(lblMissesQty);
@@ -226,17 +226,17 @@ public class MainWindow extends JFrame {
 		lblSunk.setBounds(36, 352, 112, 16);
 		contentPane.add(lblSunk);
 
-		lblShipsQty = new JLabel("3");
+		lblShipsQty = new JLabel("");
 		lblShipsQty.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblShipsQty.setBounds(205, 297, 56, 16);
 		contentPane.add(lblShipsQty);
 
-		lblShipsAliveQty = new JLabel("2");
+		lblShipsAliveQty = new JLabel("");
 		lblShipsAliveQty.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblShipsAliveQty.setBounds(205, 324, 56, 16);
 		contentPane.add(lblShipsAliveQty);
 
-		lblShipsSunkQty = new JLabel("1");
+		lblShipsSunkQty = new JLabel("");
 		lblShipsSunkQty.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblShipsSunkQty.setBounds(205, 353, 56, 16);
 		contentPane.add(lblShipsSunkQty);
@@ -622,6 +622,7 @@ public class MainWindow extends JFrame {
 		btnGroupShipTypes.add(rdBtnSubmarine);
 		btnGroupShipTypes.add(rdBtnDestroyer);
 		
+		// Action buttons for actions
 		
 		JButton btnNewButton = new JButton("Place Ships");
 		btnNewButton.setBounds(12, 614, 97, 25);
@@ -636,12 +637,19 @@ public class MainWindow extends JFrame {
 		contentPane.add(btnSurrender);
 	}
 
+	// Add action listeners
+	
 	protected void captureEvents() {
+		
 		ownBoardCanvas.addMouseListener(getOwnBoardCanvasController());
 		enemyBoardCanvas.addMouseListener(getEnemyBoardCanvasController());
 		mnCreate.addActionListener(getMainController());
 		mnJoin.addActionListener(getMainController());
 	}
+	
+	
+	// Methods to return controllers and Model
+	
 
 	public OwnBoardCanvasController getOwnBoardCanvasController() {
 		if (ownCanvasController == null) {
@@ -667,6 +675,8 @@ public class MainWindow extends JFrame {
 	public Model getModel() {
 		return model;
 	}
+	
+	// Pop up for server player
 
 	public void showPlayerDialog() {
 
@@ -674,8 +684,10 @@ public class MainWindow extends JFrame {
 		JPanel panel = new JPanel(new GridLayout(0, 1));
 		panel.add(new JLabel("Player Name:"));
 		panel.add(playerName);
+		
 		int result = JOptionPane.showConfirmDialog(this, panel, "Create Game", JOptionPane.OK_CANCEL_OPTION,
 				JOptionPane.PLAIN_MESSAGE);
+		
 		if (result == JOptionPane.OK_OPTION) {
 			if(playerName.getText().isEmpty()){
 				playerName.setText("player 1");
@@ -687,6 +699,8 @@ public class MainWindow extends JFrame {
 		}
 	}
 
+	// Pop up window for client player
+	
 	public void showServerDialog() {
 
 		JTextField playerName = new JTextField("player 2");
@@ -703,6 +717,7 @@ public class MainWindow extends JFrame {
 
 		int result = JOptionPane.showConfirmDialog(this, panelPlayerTwo, "Join Game", JOptionPane.OK_CANCEL_OPTION,
 				JOptionPane.PLAIN_MESSAGE);
+		
 		if (result == JOptionPane.OK_OPTION) {
 			getModel().initClient(serverAddress.getText(), serverPort.getText(), playerName.getText());
 			System.out.println("Player name: " + playerName.getText());

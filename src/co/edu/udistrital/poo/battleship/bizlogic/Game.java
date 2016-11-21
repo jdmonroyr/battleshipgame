@@ -4,13 +4,12 @@ import co.edu.udistrital.poo.battleship.bizlogic.Player.Color;
 
 public class Game {
 	
-	public enum GameState { FINISHED, INGAME, PLACINGSHIPS, NOTBEGUN, FABIO }
-	public enum GameShipsMax { 
-		CARRIER     (1), 
+	public enum GameState { FINISHED, INGAME, PLACINGSHIPS, NOTBEGUN }
+	public enum GameShipsMax {  
 		BATTLESHIP  (1), 
-		CRUISER     (1), 
-		SUBMARINE   (2), 
-		DESTROYER   (2) 
+		CRUISER     (2), 
+		SUBMARINE   (3), 
+		DESTROYER   (4) 
 		;
 		
 		private final int quantity;
@@ -29,13 +28,6 @@ public class Game {
 	private Player playerOne;
 	private Player playerTwo;
 	private Player playerInTurn;
-	
-	private int carrierCounter = 0;
-	private int battleshipCounter = 0;
-	private int cruiserCounter = 0;
-	private int submarineCounter = 0;
-	private int destroyerCounter = 0;
-	
 	
 	public Game(){
 		init();	
@@ -99,16 +91,4 @@ public class Game {
 	public void setPlayerInTurn(Player playerInTurn) {
 		this.playerInTurn = playerInTurn;
 	}
-
-	public boolean areCarriersAvailable() {
-		if(carrierCounter >= GameShipsMax.CARRIER.getQuantity())
-			return false;
-		
-		return true;
-	}
-
-	public void incrementCarrierCounter() {
-		carrierCounter++;
-	}	
-
 }

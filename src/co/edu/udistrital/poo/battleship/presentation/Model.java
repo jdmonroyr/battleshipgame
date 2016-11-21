@@ -27,11 +27,6 @@ public class Model implements Runnable{
 	private Board enemyBoard;
 	private Board ownBoard;
 	private SocketPlayer socketPlayer;
-
-	//FABIO
-
-	// jdm
-	
 	private int xPos = 0;
 	private int yPos = 0;
 	
@@ -41,18 +36,25 @@ public class Model implements Runnable{
 	}
 	
 	public void init(){
+		
 		getMainWindown().setSize(1280, 700);
 		getMainWindown().setVisible(true);
 		drawingThread.start();
+		
 		game = new Game();
 		game.init();
+		
 		Player activePlayer = game.getPlayerInTurn();
 		enemyBoard = activePlayer.getEnemyBoard();
 		ownBoard = activePlayer.getOwnBoard();
 		
+		getMainWindown().lblPlayerNameText.setText("no name yet");
+		getMainWindown().lblOpponentsNameText.setText("no name yet");
+		getMainWindown().lblStatusText.setText("waiting game...");
+		
 		getMainWindown().lblBattleshipQty.setText(String.valueOf(Game.GameShipsMax.BATTLESHIP.getQuantity()));
 		getMainWindown().lblCruiserQty.setText(String.valueOf(Game.GameShipsMax.CRUISER.getQuantity()));
-		getMainWindown().lblCruiserQty.setText(String.valueOf(Game.GameShipsMax.SUBMARINE.getQuantity()));
+		getMainWindown().lblSubmarineQty.setText(String.valueOf(Game.GameShipsMax.SUBMARINE.getQuantity()));
 		getMainWindown().lblDestroyerQty.setText(String.valueOf(Game.GameShipsMax.DESTROYER.getQuantity()));
 		
 		getMainWindown().lblLengthBattleship.setText(String.valueOf(ShipType.BATTLESHIP.getLength()));
@@ -67,6 +69,15 @@ public class Model implements Runnable{
 		
 		getMainWindown().rdbtnHorizontal.setEnabled(false);
 		getMainWindown().rdbtnVertical.setEnabled(false);
+		
+		getMainWindown().lblShotsQty.setText("--");
+		getMainWindown().lblHitsQty.setText("--");
+		getMainWindown().lblMissesQty.setText("--");
+		
+		getMainWindown().lblShipsQty.setText("--");
+		getMainWindown().lblShipsAliveQty.setText("--");
+		getMainWindown().lblShipsSunkQty.setText("--");
+		
 	}
 	
 	public void startPlacingShips(){
@@ -162,11 +173,6 @@ public class Model implements Runnable{
 		
 		Ship ship = null;
 		
-		/*if(getMainWindown().rdBtnCarrier.isSelected() == true){
-			if(game.areCarriersAvailable()){
-				ship = new Ship(ShipType.CARRIER);
-			}
-		}*/
 		if(getMainWindown().rdBtnBattleship.isSelected() == true)
 			ship = new Ship(ShipType.BATTLESHIP);
 		else if (getMainWindown().rdBtnCruiser.isSelected() == true)
@@ -193,8 +199,10 @@ public class Model implements Runnable{
 		
 		painted = activePlayer.getOwnBoard().markBoat(xCell, yCell, ship);
 		
-		if(painted)
-			game.incrementCarrierCounter();
+		if(painted){
+			//game.incrementCarrierCounter();
+		}
+			
 		
 	}
 	
