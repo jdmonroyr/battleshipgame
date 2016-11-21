@@ -1,16 +1,14 @@
 package co.edu.udistrital.poo.battleship.conect;
 
-import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 import co.edu.udistrital.poo.battleship.presentation.Model;
 
-public class ThreadServer implements Runnable{
+public class ThreadServer implements Runnable, ThreadBattleShip{
 
 	final int PUERTO=5000;
 	final String ENCABEZADO = "BNAVAL";
@@ -59,6 +57,17 @@ public class ThreadServer implements Runnable{
 			e.printStackTrace();
 		}
 	
+	}
+
+	@Override
+	public void initGame() {
+		socketPlayer.sendMessage(SocketPlayer.COMANDO_LIS, "OK", null, salida);
+	}
+
+	@Override
+	public void initClientConnection() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

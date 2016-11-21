@@ -22,6 +22,7 @@ import co.edu.udistrital.poo.battleship.bizlogic.Player;
 import co.edu.udistrital.poo.battleship.bizlogic.Player.PlacingShipsStatus;
 import co.edu.udistrital.poo.battleship.bizlogic.Ship;
 import co.edu.udistrital.poo.battleship.bizlogic.Sistema;
+import co.edu.udistrital.poo.battleship.conect.ThreadBattleShip;
 import co.edu.udistrital.poo.battleship.conect.ThreadCliente;
 import co.edu.udistrital.poo.battleship.conect.ThreadServer;
 
@@ -36,8 +37,7 @@ public class Model implements Runnable{
 	private Board enemyBoard;
 	private Board ownBoard;
 //<<<<<<< HEAD
-	private ThreadServer hiloServidor;
-	private ThreadCliente hiloCliente;
+	private ThreadBattleShip hiloJuego;
 	
 	//FABIO
 
@@ -292,8 +292,8 @@ public class Model implements Runnable{
 	
 	public void initClient(String hostName,String port, String playerName){
 		try {
-			hiloCliente = new ThreadCliente(this, playerName, hostName, Integer.parseInt(port));
-			hiloCliente.initClientConnection();
+			hiloJuego = new ThreadCliente(this, playerName, hostName, Integer.parseInt(port));
+			hiloJuego.initClientConnection();
 			//socketPlayer.initClientConnection(playerName, hostName, Integer.parseInt(port));
 			//socketPlayer.readMessage();
 		} catch (Exception e) {
@@ -304,8 +304,8 @@ public class Model implements Runnable{
 	public void initServer(String playerName){
 		
 		try{
-				hiloServidor = new ThreadServer(this, playerName);
-				hiloServidor.waitForConnection();
+				hiloJuego = new ThreadServer(this, playerName);
+				hiloJuego.waitForConnection();
 				//socketPlayer.readMessage();
 		} catch (Exception e){
 			System.out.println("ERROR: " + e.getMessage());

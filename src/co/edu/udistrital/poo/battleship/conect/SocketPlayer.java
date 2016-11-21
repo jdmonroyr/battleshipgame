@@ -12,7 +12,7 @@ import co.edu.udistrital.poo.battleship.presentation.Model;
 public class SocketPlayer {
 
 	final String ENCABEZADO = "BNAVAL";
-	final static String COMANDO_CON ="CON";
+	final static String COMANDO_CON ="CON", COMANDO_LIS ="LIS";
 	private Model model;
 	
 	ServerSocket sc;
@@ -45,6 +45,8 @@ public class SocketPlayer {
 				switch (comando) {
 				case "CON":
 					model.setOpponentName(param1);
+					break;
+				case "LIS":
 					break;
 				default:
 					break;

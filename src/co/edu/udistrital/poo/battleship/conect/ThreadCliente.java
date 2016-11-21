@@ -3,12 +3,11 @@ package co.edu.udistrital.poo.battleship.conect;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.Socket;
 
 import co.edu.udistrital.poo.battleship.presentation.Model;
 
-public class ThreadCliente implements Runnable{
+public class ThreadCliente implements Runnable, ThreadBattleShip{
 
 	private Model model;
 	private String playerName, hostName;
@@ -50,6 +49,14 @@ public void initClientConnection() {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void initGame() {
+		socketPlayer.sendMessage(SocketPlayer.COMANDO_LIS, "OK", null, salida);		
+	}
+
+	public void waitForConnection() {
+	
 	}
 
 }
