@@ -426,6 +426,8 @@ public class Model implements Runnable{
 			}
 			else {
 			
+				
+				getMainWindown().enemyBoardCanvas.addMouseListener(getMainWindown().getEnemyBoardCanvasController());
 			// call action command LIS
 			}
 		}

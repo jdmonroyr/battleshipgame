@@ -647,7 +647,7 @@ public class MainWindow extends JFrame {
 	protected void captureEvents() {
 		
 		ownBoardCanvas.addMouseListener(getOwnBoardCanvasController());
-		enemyBoardCanvas.addMouseListener(getEnemyBoardCanvasController());
+		//enemyBoardCanvas.addMouseListener(getEnemyBoardCanvasController());
 		mnCreate.addActionListener(getMainController());
 		mnJoin.addActionListener(getMainController());
 		btnPlaceShipsButton.addActionListener(getMainController());
