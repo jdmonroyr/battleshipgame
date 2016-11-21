@@ -71,7 +71,7 @@ public class ThreadServer implements Runnable, ThreadBattleShip{
 	}
 
 	public void setEnemyFire(String posX, String posY) {
-		socketPlayer.sendMessage(SocketPlayer.COMANDO_LIS, posX, posY, salida);
+		socketPlayer.sendMessage(SocketPlayer.COMANDO_ATK, posX, posY, salida);
 
 	}
 
