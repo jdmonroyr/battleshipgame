@@ -439,7 +439,7 @@ public class Model implements Runnable{
 		
 		public void beginGame(){
 			Player player = game.getPlayerForGame();
-			setStatusText("in game (my turn)");
+			setStatusText("en turno");
 			getMainWindown().enemyBoardCanvas.addMouseListener(getMainWindown().getEnemyBoardCanvasController());
 			if(game.getGameType() == GameType.SERVER)
 				player.setTurn(true);
@@ -456,9 +456,12 @@ public class Model implements Runnable{
 			
 			if(isHit)
 				 attackResult = AttackResult.HIT;
-			else
+			else{
 				attackResult = AttackResult.MISS;
-			
+				player.setTurn(true);
+				getMainWindown().lblStatusText.setText("en turno");
+			}
+				
 			boolean isAnyShipAlive = false;
 			
 			for(Ship ship : player.getShips()){
@@ -480,8 +483,11 @@ public class Model implements Runnable{
 			Player player = game.getPlayerForGame();
 			player.updateAfterFire(lastXShot, lastYShot, attackResult);
 			
-			//if(player.isInTurn())
-				//player.setTurn(false);
+			if(attackResult == AttackResult.MISS){
+				if(player.isInTurn())
+					player.setTurn(false);
+					getMainWindown().lblStatusText.setText("esperando turno");
+			}
 			
 		}
 		
