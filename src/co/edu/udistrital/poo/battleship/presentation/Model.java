@@ -3,7 +3,13 @@ package co.edu.udistrital.poo.battleship.presentation;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.GridLayout;
 import java.awt.image.BufferedImage;
+
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import co.edu.udistrital.poo.battleship.bizlogic.Board;
 import co.edu.udistrital.poo.battleship.bizlogic.Cell.CellState;
@@ -11,7 +17,9 @@ import co.edu.udistrital.poo.battleship.bizlogic.Ship.ShipOrientation;
 import co.edu.udistrital.poo.battleship.bizlogic.Ship.ShipStatus;
 import co.edu.udistrital.poo.battleship.bizlogic.Ship.ShipType;
 import co.edu.udistrital.poo.battleship.bizlogic.Game;
+import co.edu.udistrital.poo.battleship.bizlogic.Game.GameShipsMax;
 import co.edu.udistrital.poo.battleship.bizlogic.Player;
+import co.edu.udistrital.poo.battleship.bizlogic.Player.PlacingShipsStatus;
 import co.edu.udistrital.poo.battleship.bizlogic.Ship;
 import co.edu.udistrital.poo.battleship.bizlogic.Sistema;
 import co.edu.udistrital.poo.battleship.conect.ThreadCliente;
@@ -27,6 +35,7 @@ public class Model implements Runnable{
 	private Game game = null;
 	private Board enemyBoard;
 	private Board ownBoard;
+//<<<<<<< HEAD
 	private ThreadServer hiloServidor;
 	private ThreadCliente hiloCliente;
 	
@@ -36,6 +45,9 @@ public class Model implements Runnable{
 	
 	private int xPos = 0;
 	private int yPos = 0;
+//=======
+	//private SocketPlayer socketPlayer;
+//>>>>>>> branch 'master' of https://github.com/jdmonroyr/battleshipgame.git
 	
 	public Model(){
 		getSistema().setActivo(true);
@@ -43,18 +55,17 @@ public class Model implements Runnable{
 	}
 	
 	public void init(){
+		
 		getMainWindown().setSize(1280, 700);
 		getMainWindown().setVisible(true);
-		drawingThread.start();
-		game = new Game();
-		game.init();
-		Player activePlayer = game.getPlayerInTurn();
-		enemyBoard = activePlayer.getEnemyBoard();
-		ownBoard = activePlayer.getOwnBoard();
+		
+		getMainWindown().lblPlayerNameText.setText("no name yet");
+		getMainWindown().lblOpponentsNameText.setText("no name yet");
+		getMainWindown().lblStatusText.setText("waiting game...");
 		
 		getMainWindown().lblBattleshipQty.setText(String.valueOf(Game.GameShipsMax.BATTLESHIP.getQuantity()));
 		getMainWindown().lblCruiserQty.setText(String.valueOf(Game.GameShipsMax.CRUISER.getQuantity()));
-		getMainWindown().lblCruiserQty.setText(String.valueOf(Game.GameShipsMax.SUBMARINE.getQuantity()));
+		getMainWindown().lblSubmarineQty.setText(String.valueOf(Game.GameShipsMax.SUBMARINE.getQuantity()));
 		getMainWindown().lblDestroyerQty.setText(String.valueOf(Game.GameShipsMax.DESTROYER.getQuantity()));
 		
 		getMainWindown().lblLengthBattleship.setText(String.valueOf(ShipType.BATTLESHIP.getLength()));
@@ -69,6 +80,15 @@ public class Model implements Runnable{
 		
 		getMainWindown().rdbtnHorizontal.setEnabled(false);
 		getMainWindown().rdbtnVertical.setEnabled(false);
+		
+		getMainWindown().lblShotsQty.setText("--");
+		getMainWindown().lblHitsQty.setText("--");
+		getMainWindown().lblMissesQty.setText("--");
+		
+		getMainWindown().lblShipsQty.setText("--");
+		getMainWindown().lblShipsAliveQty.setText("--");
+		getMainWindown().lblShipsSunkQty.setText("--");
+		
 	}
 	
 	public void startPlacingShips(){
@@ -101,16 +121,32 @@ public class Model implements Runnable{
 		
 		for (int i = 0; i < ownBoard.getRows(); i++){
 			for(int j= 0; j < ownBoard.getColumns(); j++){
+				
 				if(ownBoard.getCells()[i][j].getState() == CellState.HIT){
 					pencilOwnBoardCanvasDblBuffer.setColor(Color.RED);
 					pencilOwnBoardCanvasDblBuffer.fillRect(i * 40, j * 40, 40, 40);
 				}
+				
 				else if(ownBoard.getCells()[i][j].getState() == CellState.MISS){
 					pencilOwnBoardCanvasDblBuffer.setColor(Color.WHITE);
 					pencilOwnBoardCanvasDblBuffer.fillRect(i * 40, j * 40, 40, 40);
 				}
+				
 				else if(ownBoard.getCells()[i][j].getState() == CellState.BOAT){
-					pencilOwnBoardCanvasDblBuffer.setColor(Color.BLACK);
+					
+					if(ownBoard.getCells()[i][j].getShip().getType() == ShipType.BATTLESHIP){
+						pencilOwnBoardCanvasDblBuffer.setColor(Color.YELLOW);
+					}
+					else if(ownBoard.getCells()[i][j].getShip().getType() == ShipType.CRUISER){
+						pencilOwnBoardCanvasDblBuffer.setColor(Color.GREEN);
+					}
+					else if(ownBoard.getCells()[i][j].getShip().getType() == ShipType.SUBMARINE){
+						pencilOwnBoardCanvasDblBuffer.setColor(Color.CYAN);
+					}
+					else if(ownBoard.getCells()[i][j].getShip().getType() == ShipType.DESTROYER){
+						pencilOwnBoardCanvasDblBuffer.setColor(Color.ORANGE);
+					}
+					
 					pencilOwnBoardCanvasDblBuffer.fillRect(i * 40, j * 40, 40, 40);
 				}
 			}
@@ -164,11 +200,6 @@ public class Model implements Runnable{
 		
 		Ship ship = null;
 		
-		/*if(getMainWindown().rdBtnCarrier.isSelected() == true){
-			if(game.areCarriersAvailable()){
-				ship = new Ship(ShipType.CARRIER);
-			}
-		}*/
 		if(getMainWindown().rdBtnBattleship.isSelected() == true)
 			ship = new Ship(ShipType.BATTLESHIP);
 		else if (getMainWindown().rdBtnCruiser.isSelected() == true)
@@ -178,7 +209,8 @@ public class Model implements Runnable{
 		else if(getMainWindown().rdBtnDestroyer.isSelected() == true)
 			ship = new Ship(ShipType.DESTROYER);
 			
-		Player activePlayer = game.getPlayerInTurn();
+		Player player = game.getPlayerForGame();
+		
 		int xCell = xPos / 40;
 		int yCell = yPos / 40;
 		
@@ -193,22 +225,48 @@ public class Model implements Runnable{
 		
 		boolean painted;
 		
-		painted = activePlayer.getOwnBoard().markBoat(xCell, yCell, ship);
+		PlacingShipsStatus placingShipStatus = player.markBoat(xCell, yCell, ship);
 		
-		if(painted)
-			game.incrementCarrierCounter();
+		if(placingShipStatus == PlacingShipsStatus.COLLISION)
+			showErrorPopUp("No es posible posicionar el barco en esa posición.");
+		else if(placingShipStatus == PlacingShipsStatus.MAXNUM)
+			showErrorPopUp("Se ha alcanzado el máxino número de barcos de este tipo.");
+		else if (placingShipStatus == PlacingShipsStatus.OK){
+			int left = 0;
+			if(ship.getType() == ShipType.BATTLESHIP){
+				left = GameShipsMax.BATTLESHIP.getQuantity() - player.getShipNumberForType(ShipType.BATTLESHIP); 
+				getMainWindown().lblBattleshipQty.setText(String.valueOf(left));
+			}
+			if(ship.getType() == ShipType.CRUISER){
+				left = GameShipsMax.CRUISER.getQuantity() - player.getShipNumberForType(ShipType.CRUISER);
+				getMainWindown().lblCruiserQty.setText(String.valueOf(left));
+			}
+			if(ship.getType() == ShipType.SUBMARINE){
+				left = GameShipsMax.SUBMARINE.getQuantity() - player.getShipNumberForType(ShipType.SUBMARINE);
+				getMainWindown().lblSubmarineQty.setText(String.valueOf(left));
+			}
+			if(ship.getType() == ShipType.DESTROYER){
+				left = GameShipsMax.DESTROYER.getQuantity() - player.getShipNumberForType(ShipType.DESTROYER);
+				getMainWindown().lblDestroyerQty.setText(String.valueOf(left));
+			}
+		}
 		
 	}
 	
 	public void fire(int xPos, int yPos){
 		
-		Player activePlayer = game.getPlayerInTurn();
+		Player player = game.getPlayerForGame();
+		
 		int xCell = xPos / 40;
 		int yCell = yPos / 40;
 		
 		System.out.println("xCell: " + xCell + " yCell: " + yCell);
 		
-		enemyBoard = activePlayer.fire(xCell, yCell);
+		player.fire(xCell, yCell);
+		
+		getMainWindown().lblShotsQty.setText(String.valueOf(player.getShots()));
+		getMainWindown().lblHitsQty.setText(String.valueOf(player.getHits()));
+		getMainWindown().lblMissesQty.setText(String.valueOf(player.getMisses()));
 		
 	}
 	
@@ -264,4 +322,95 @@ public class Model implements Runnable{
 		getMainWindown().lblOpponentsNameText.setText(name);
 	}
 	
+	public void configServerPlayer(String playerName){
+				
+		game = new Game();
+		Player player = new Player(playerName, game);
+		
+		game.init(player, null);
+		enemyBoard = player.getEnemyBoard();
+		ownBoard = player.getOwnBoard();
+		
+		drawingThread.start();
+		
+		initServer(playerName);
+		
+		getMainWindown().lblPlayerNameText.setText(playerName);
+		getMainWindown().lblStatusText.setText("waiting for opp..");
+		
+	}
+	
+	public void configClientPlayer(String playerName, String serverAddress, String serverPort){
+		
+		game = new Game();
+		Player player = new Player(playerName, game);
+		
+		game.init(null, player);
+		enemyBoard = player.getEnemyBoard();
+		ownBoard = player.getOwnBoard();
+		
+		drawingThread.start();
+		
+		initClient(serverAddress, serverPort, playerName);
+		
+		getMainWindown().lblPlayerNameText.setText(playerName);
+		getMainWindown().lblStatusText.setText("joined game...");
+		
+	}
+	
+	public void showErrorPopUp(String message){
+		
+		JOptionPane.showMessageDialog(getMainWindown(), message, "Error Message", JOptionPane.ERROR_MESSAGE);
+		
+	}
+	
+	// Pop up for server player
+
+	public void showDialogCreateGame() {
+
+			JTextField playerName = new JTextField("player 1");
+			JPanel panel = new JPanel(new GridLayout(0, 1));
+			panel.add(new JLabel("Player Name:"));
+			panel.add(playerName);
+			
+			int result = JOptionPane.showConfirmDialog(getMainWindown(), panel, "Create Game", JOptionPane.OK_CANCEL_OPTION,
+					JOptionPane.PLAIN_MESSAGE);
+			
+			if (result == JOptionPane.OK_OPTION) {
+				if(playerName.getText().isEmpty()){
+					playerName.setText("player 1");
+				}
+				//getModel().initServer(playerName.getText());
+				configServerPlayer(playerName.getText());
+			} else {
+				System.out.println("Cancelled");
+			}
+		}
+
+		// Pop up window for client player
+		
+		public void showDialogJoinGame() {
+
+			JTextField playerName = new JTextField("player 2");
+			JTextField serverAddress = new JTextField("127.0.0.1");
+			JTextField serverPort = new JTextField("50000");
+
+			JPanel panelPlayerTwo = new JPanel(new GridLayout(0, 1));
+			panelPlayerTwo.add(new JLabel("Player Name:"));
+			panelPlayerTwo.add(playerName);
+			panelPlayerTwo.add(new JLabel("Server Address:"));
+			panelPlayerTwo.add(serverAddress);
+			panelPlayerTwo.add(new JLabel("Server Port:"));
+			panelPlayerTwo.add(serverPort);
+
+			int result = JOptionPane.showConfirmDialog(getMainWindown(), panelPlayerTwo, "Join Game", JOptionPane.OK_CANCEL_OPTION,
+					JOptionPane.PLAIN_MESSAGE);
+			
+			if (result == JOptionPane.OK_OPTION) {
+				configClientPlayer(playerName.getText(), serverAddress.getText(), serverPort.getText());
+				//getModel().initClient(serverAddress.getText(), serverPort.getText(), playerName.getText());
+			} else {
+				System.out.println("Cancelled");
+			}
+		}
 }

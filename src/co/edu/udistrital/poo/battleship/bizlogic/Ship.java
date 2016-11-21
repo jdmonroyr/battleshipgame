@@ -5,11 +5,10 @@ import java.util.ArrayList;
 public class Ship {
 	
 	public enum ShipType { 
-		CARRIER     (5), 
 		BATTLESHIP  (4), 
 		CRUISER     (3), 
 		SUBMARINE   (2), 
-		DESTROYER   (2) 
+		DESTROYER   (1) 
 		;
 		
 		private final int length;
@@ -35,6 +34,7 @@ public class Ship {
 	public Ship(ShipType type){
 		this.type = type;
 		status = ShipStatus.FLOATING;
+		location = new ArrayList<Cell>();
 	}
 
 	public ShipType getType() {
@@ -77,6 +77,8 @@ public class Ship {
 		this.status = status;
 	}
 	
-	
-
+	public void addLocationCell(Cell cell){
+		location.add(cell);
+		
+	}
 }
