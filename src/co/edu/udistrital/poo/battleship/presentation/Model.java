@@ -424,9 +424,7 @@ public class Model implements Runnable{
 				int left = shipsNumber - player.getShips().size();
 				showErrorPopUp("Faltan " + left + " barcos por posicionar.");
 			}
-			else {
-			
-				
+			else {			
 				getMainWindown().enemyBoardCanvas.addMouseListener(getMainWindown().getEnemyBoardCanvasController());
 			// call action command LIS
 			}
