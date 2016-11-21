@@ -6,6 +6,7 @@ import java.util.List;
 import co.edu.udistrital.poo.battleship.bizlogic.Cell.CellState;
 import co.edu.udistrital.poo.battleship.bizlogic.Game.GameShipsMax;
 import co.edu.udistrital.poo.battleship.bizlogic.Ship.ShipType;
+import co.edu.udistrital.poo.battleship.presentation.Model.AttackResult;
 
 public class Player {
 	
@@ -49,11 +50,14 @@ public class Player {
 	
 	////////////////
 	
-	public CellState fire(int xPos, int yPos, CellState cellState){
+	public CellState updateAfterFire(int xPos, int yPos, AttackResult attackResult){
 		
 		Cell cell = enemyBoard.getCell(xPos, yPos);
-		cell.setState(cellState);
 		
+		if(attackResult == AttackResult.HIT)
+			cell.setState(CellState.HIT);
+		else if(attackResult == AttackResult.MISS)
+			cell.setState(CellState.MISS);
 		
 		// Call socket to fire;
 		

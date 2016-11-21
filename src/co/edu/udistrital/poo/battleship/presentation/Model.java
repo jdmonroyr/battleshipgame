@@ -28,6 +28,8 @@ import co.edu.udistrital.poo.battleship.conect.ThreadServer;
 
 public class Model implements Runnable{
 	
+	public enum AttackResult { HIT, MISS, GAME_OVER}
+	
 	private Thread drawingThread;
 	private MainWindow mainWindow;
 	private Sistema sistema;
@@ -36,18 +38,12 @@ public class Model implements Runnable{
 	private Game game = null;
 	private Board enemyBoard;
 	private Board ownBoard;
-//<<<<<<< HEAD
 	private ThreadBattleShip hiloJuego;
-	
-	//FABIO
-
-	// jdm
-	
 	private int xPos = 0;
 	private int yPos = 0;
-//=======
-	//private SocketPlayer socketPlayer;
-//>>>>>>> branch 'master' of https://github.com/jdmonroyr/battleshipgame.git
+	private int lastXShot = 0;
+	private int lastYShot = 0;
+
 	
 	public Model(){
 		getSistema().setActivo(true);
@@ -258,14 +254,17 @@ public class Model implements Runnable{
 		int xCell = xPos / 40;
 		int yCell = yPos / 40;
 		
+		lastXShot = xCell;
+		lastYShot = yCell;
+		
 		// send command to fire opponent
 		
-		Player player = game.getPlayerForGame();
+		/*Player player = game.getPlayerForGame();
 		player.fire(xCell, yCell, CellState.MISS);
 		
 		getMainWindown().lblShotsQty.setText(String.valueOf(player.getShots()));
 		getMainWindown().lblHitsQty.setText(String.valueOf(player.getHits()));
-		getMainWindown().lblMissesQty.setText(String.valueOf(player.getMisses()));
+		getMainWindown().lblMissesQty.setText(String.valueOf(player.getMisses()));*/
 		
 	}
 	
@@ -436,5 +435,40 @@ public class Model implements Runnable{
 		public void beginGame(){
 			setStatusText("in game (my turn)");
 			getMainWindown().enemyBoardCanvas.addMouseListener(getMainWindown().getEnemyBoardCanvasController());
+		}
+		
+		public AttackResult getFired(int xCell, int yCell){
+			
+			AttackResult attackResult;
+			Player player = game.getPlayerForGame();
+			boolean isHit = player.checkIfHit(xCell, yCell);
+			player.checkIfSunk(xCell, yCell);
+			
+			if(isHit)
+				 attackResult = AttackResult.HIT;
+			else
+				attackResult = AttackResult.MISS;
+			
+			boolean isAnyShipAlive = false;
+			
+			for(Ship ship : player.getShips()){
+				if(ship.getStatus() == ShipStatus.FLOATING){
+					isAnyShipAlive = true;
+					break;
+				}
+			}
+			
+			if(isAnyShipAlive == false)
+				attackResult = AttackResult.GAME_OVER;
+			
+			
+			return attackResult;
+		}
+		
+		public void updateEnemyBoard(AttackResult attackResult){
+			
+			Player player = game.getPlayerForGame();
+			player.updateAfterFire(lastXShot, lastYShot, attackResult);
+			
 		}
 }
