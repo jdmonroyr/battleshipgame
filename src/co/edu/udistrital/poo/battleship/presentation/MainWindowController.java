@@ -26,10 +26,10 @@ public class MainWindowController implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		
 		if(e.getActionCommand() == "Create"){
-			mainWindow.showPlayerDialog();
+			mainWindow.getModel().showDialogCreateGame();
 		}
 		else if(e.getActionCommand() == "Join"){
-			mainWindow.showServerDialog();
+			mainWindow.getModel().showDialogJoinGame();
 		}
 
 	}

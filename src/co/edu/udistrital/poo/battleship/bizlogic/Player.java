@@ -4,15 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import co.edu.udistrital.poo.battleship.bizlogic.Cell.CellState;
+import co.edu.udistrital.poo.battleship.bizlogic.Game.GameShipsMax;
+import co.edu.udistrital.poo.battleship.bizlogic.Ship.ShipType;
 
 public class Player {
 	
-	public enum Color { BLUE, RED, YELLOW, GREEN };
-	
-	private static int victories;
-	
 	private String name;
-	private Color color;
 	
 	private boolean isInTurn;
 	private Board ownBoard;
@@ -21,9 +18,9 @@ public class Player {
 	
 	private Game game;
 	
-	public Player(String name, Color color){
+	public Player(String name, Game game){
 		this.name = name;
-		this.color = color;
+		this.game = game;
 		ships = new ArrayList<Ship>();
 	}
 	
@@ -35,18 +32,6 @@ public class Player {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-	
-	public Color getColor() {
-		return color;
-	}
-
-	public void addVictory() {
-		victories++;
-	}
-	
-	public int getVictories() {
-		return victories;
 	}
 	
 	public void setGame(Game game){
@@ -89,8 +74,8 @@ public class Player {
 	}
 	
 	public void initBoards(){
-		ownBoard = new Board (10, 10);
-		enemyBoard = new Board (10, 10);
+		ownBoard = new Board (Game.BOARD_LENGTH, Game.BOARD_WIDTH);
+		enemyBoard = new Board (Game.BOARD_LENGTH, Game.BOARD_WIDTH);
 		ownBoard.initBoard();
 		enemyBoard.initBoard();
 	}
@@ -122,6 +107,42 @@ public class Player {
 
 	public void setEnemyBoard(Board enemyBoard) {
 		this.enemyBoard = enemyBoard;
+	}
+	
+	public boolean markBoat(int xPos, int yPos, Ship ship) {
+		
+		int counterShips = 0;
+		
+		for(Ship ownShip : ships){
+			if(ownShip.getType() == ship.getType())
+				counterShips++;
+		}
+		
+		GameShipsMax gameShipTypeMax = null;
+		
+		if(ship.getType() == ShipType.BATTLESHIP)
+			gameShipTypeMax = GameShipsMax.BATTLESHIP;
+		
+		else if(ship.getType() == ShipType.CRUISER)
+			gameShipTypeMax = GameShipsMax.CRUISER;
+		
+		else if(ship.getType() == ShipType.SUBMARINE)
+			gameShipTypeMax = GameShipsMax.SUBMARINE;
+		
+		else if(ship.getType() == ShipType.DESTROYER)
+			gameShipTypeMax = GameShipsMax.DESTROYER;
+		
+		
+		if(counterShips >= gameShipTypeMax.getQuantity())
+			return false;
+		
+		
+		if(ownBoard.markBoat(xPos, yPos, ship)){
+			ships.add(ship);
+			return true;
+		}
+		
+		return false;
 	}
 	
 	

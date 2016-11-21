@@ -3,7 +3,13 @@ package co.edu.udistrital.poo.battleship.presentation;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.GridLayout;
 import java.awt.image.BufferedImage;
+
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import co.edu.udistrital.poo.battleship.bizlogic.Board;
 import co.edu.udistrital.poo.battleship.bizlogic.Cell.CellState;
@@ -27,8 +33,6 @@ public class Model implements Runnable{
 	private Board enemyBoard;
 	private Board ownBoard;
 	private SocketPlayer socketPlayer;
-	private int xPos = 0;
-	private int yPos = 0;
 	
 	public Model(){
 		getSistema().setActivo(true);
@@ -39,14 +43,14 @@ public class Model implements Runnable{
 		
 		getMainWindown().setSize(1280, 700);
 		getMainWindown().setVisible(true);
-		drawingThread.start();
+		//drawingThread.start();
 		
-		game = new Game();
-		game.init();
+		//game = new Game();
+		//game.init();
 		
-		Player activePlayer = game.getPlayerInTurn();
-		enemyBoard = activePlayer.getEnemyBoard();
-		ownBoard = activePlayer.getOwnBoard();
+		//Player activePlayer = game.getPlayerInTurn();
+		//enemyBoard = activePlayer.getEnemyBoard();
+		//ownBoard = activePlayer.getOwnBoard();
 		
 		getMainWindown().lblPlayerNameText.setText("no name yet");
 		getMainWindown().lblOpponentsNameText.setText("no name yet");
@@ -182,7 +186,7 @@ public class Model implements Runnable{
 		else if(getMainWindown().rdBtnDestroyer.isSelected() == true)
 			ship = new Ship(ShipType.DESTROYER);
 			
-		Player activePlayer = game.getPlayerInTurn();
+		Player player = game.getPlayerForGame();
 		int xCell = xPos / 40;
 		int yCell = yPos / 40;
 		
@@ -197,24 +201,22 @@ public class Model implements Runnable{
 		
 		boolean painted;
 		
-		painted = activePlayer.getOwnBoard().markBoat(xCell, yCell, ship);
+		painted = player.markBoat(xCell, yCell, ship);
 		
-		if(painted){
-			//game.incrementCarrierCounter();
-		}
-			
+		if(painted)
+			showMaxShipsPopUp();
 		
 	}
 	
 	public void fire(int xPos, int yPos){
 		
-		Player activePlayer = game.getPlayerInTurn();
+		//Player activePlayer = game.getPlayerInTurn();
 		int xCell = xPos / 40;
 		int yCell = yPos / 40;
 		
 		System.out.println("xCell: " + xCell + " yCell: " + yCell);
 		
-		enemyBoard = activePlayer.fire(xCell, yCell);
+		//enemyBoard = activePlayer.fire(xCell, yCell);
 		
 	}
 	
@@ -271,4 +273,93 @@ public class Model implements Runnable{
 		getMainWindown().lblOpponentsNameText.setText(name);
 	}
 	
+	public void configServerPlayer(String playerName){
+				
+		game = new Game();
+		Player player = new Player(playerName, game);
+		
+		game.init(player, null);
+		enemyBoard = player.getEnemyBoard();
+		ownBoard = player.getOwnBoard();
+		
+		drawingThread.start();
+		
+		//getModel().initServer(playerName.getText());
+		
+		getMainWindown().lblPlayerNameText.setText(playerName);
+		getMainWindown().lblStatusText.setText("waiting for opp..");
+		
+	}
+	
+	public void configClientPlayer(String playerName){
+		
+		game = new Game();
+		Player player = new Player(playerName, game);
+		
+		game.init(null, player);
+		enemyBoard = player.getEnemyBoard();
+		ownBoard = player.getOwnBoard();
+		
+		drawingThread.start();
+		
+		//getModel().initClient(serverAddress.getText(), serverPort.getText(), playerName.getText());
+		
+		getMainWindown().lblPlayerNameText.setText(playerName);
+		getMainWindown().lblStatusText.setText("joined game...");
+		
+	}
+	
+	public void showMaxShipsPopUp(){
+		
+	}
+	
+	// Pop up for server player
+
+		public void showDialogCreateGame() {
+
+			JTextField playerName = new JTextField("player 1");
+			JPanel panel = new JPanel(new GridLayout(0, 1));
+			panel.add(new JLabel("Player Name:"));
+			panel.add(playerName);
+			
+			int result = JOptionPane.showConfirmDialog(getMainWindown(), panel, "Create Game", JOptionPane.OK_CANCEL_OPTION,
+					JOptionPane.PLAIN_MESSAGE);
+			
+			if (result == JOptionPane.OK_OPTION) {
+				if(playerName.getText().isEmpty()){
+					playerName.setText("player 1");
+				}
+				//getModel().initServer(playerName.getText());
+				configServerPlayer(playerName.getText());
+			} else {
+				System.out.println("Cancelled");
+			}
+		}
+
+		// Pop up window for client player
+		
+		public void showDialogJoinGame() {
+
+			JTextField playerName = new JTextField("player 2");
+			JTextField serverAddress = new JTextField("127.0.0.1");
+			JTextField serverPort = new JTextField("50000");
+
+			JPanel panelPlayerTwo = new JPanel(new GridLayout(0, 1));
+			panelPlayerTwo.add(new JLabel("Player Name:"));
+			panelPlayerTwo.add(playerName);
+			panelPlayerTwo.add(new JLabel("Server Address:"));
+			panelPlayerTwo.add(serverAddress);
+			panelPlayerTwo.add(new JLabel("Server Port:"));
+			panelPlayerTwo.add(serverPort);
+
+			int result = JOptionPane.showConfirmDialog(getMainWindown(), panelPlayerTwo, "Join Game", JOptionPane.OK_CANCEL_OPTION,
+					JOptionPane.PLAIN_MESSAGE);
+			
+			if (result == JOptionPane.OK_OPTION) {
+				configClientPlayer(playerName.getText());
+				//getModel().initClient(serverAddress.getText(), serverPort.getText(), playerName.getText());
+			} else {
+				System.out.println("Cancelled");
+			}
+		}
 }

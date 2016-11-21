@@ -676,54 +676,5 @@ public class MainWindow extends JFrame {
 		return model;
 	}
 	
-	// Pop up for server player
-
-	public void showPlayerDialog() {
-
-		JTextField playerName = new JTextField("player 1");
-		JPanel panel = new JPanel(new GridLayout(0, 1));
-		panel.add(new JLabel("Player Name:"));
-		panel.add(playerName);
-		
-		int result = JOptionPane.showConfirmDialog(this, panel, "Create Game", JOptionPane.OK_CANCEL_OPTION,
-				JOptionPane.PLAIN_MESSAGE);
-		
-		if (result == JOptionPane.OK_OPTION) {
-			if(playerName.getText().isEmpty()){
-				playerName.setText("player 1");
-			}
-			lblPlayerNameText.setText(playerName.getText());
-			getModel().initServer(playerName.getText());
-		} else {
-			System.out.println("Cancelled");
-		}
-	}
-
-	// Pop up window for client player
 	
-	public void showServerDialog() {
-
-		JTextField playerName = new JTextField("player 2");
-		JTextField serverAddress = new JTextField("127.0.0.1");
-		JTextField serverPort = new JTextField("50000");
-
-		JPanel panelPlayerTwo = new JPanel(new GridLayout(0, 1));
-		panelPlayerTwo.add(new JLabel("Player Name:"));
-		panelPlayerTwo.add(playerName);
-		panelPlayerTwo.add(new JLabel("Server Address:"));
-		panelPlayerTwo.add(serverAddress);
-		panelPlayerTwo.add(new JLabel("Server Port:"));
-		panelPlayerTwo.add(serverPort);
-
-		int result = JOptionPane.showConfirmDialog(this, panelPlayerTwo, "Join Game", JOptionPane.OK_CANCEL_OPTION,
-				JOptionPane.PLAIN_MESSAGE);
-		
-		if (result == JOptionPane.OK_OPTION) {
-			getModel().initClient(serverAddress.getText(), serverPort.getText(), playerName.getText());
-			System.out.println("Player name: " + playerName.getText());
-			System.out.println("Server Address: " + serverAddress.getText() + ":" + serverPort);
-		} else {
-			System.out.println("Cancelled");
-		}
-	}
 }

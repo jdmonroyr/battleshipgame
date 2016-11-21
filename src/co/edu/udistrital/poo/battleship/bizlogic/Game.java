@@ -1,10 +1,9 @@
 package co.edu.udistrital.poo.battleship.bizlogic;
 
-import co.edu.udistrital.poo.battleship.bizlogic.Player.Color;
-
 public class Game {
 	
-	public enum GameState { FINISHED, INGAME, PLACINGSHIPS, NOTBEGUN }
+	public enum GameState { FINISHED, INGAME, PLACINGSHIPS, WAITINGFOROPP }
+	public enum GameType { SERVER, CLIENT }
 	public enum GameShipsMax {  
 		BATTLESHIP  (1), 
 		CRUISER     (2), 
@@ -23,18 +22,15 @@ public class Game {
 		}
 	}
 	
-	private static int plays = 0;
 	private GameState state;
+	private GameType gameType;
 	private Player playerOne;
 	private Player playerTwo;
-	private Player playerInTurn;
+	
+	final static int BOARD_LENGTH = 10;
+	final static int BOARD_WIDTH = 10;
 	
 	public Game(){
-		init();	
-	}
-
-	public static void updatePlays() {
-		plays++;
 	}
 
 	public GameState getState() {
@@ -45,15 +41,18 @@ public class Game {
 		this.state = state;
 	}
 	
-	public void init(){
-		setState(GameState.INGAME);
-		playerOne = new Player("player1", Color.BLUE);
-		//playerTwo = new Player("player2", Color.RED);
-		playerOne.initBoards();
-		//playerTwo.initBoards();
-		updatePlays();
-		setPlayerInTurn(playerOne);
-		
+	public void init(Player playerOne, Player playerTwo){
+		setState(GameState.WAITINGFOROPP);
+		this.playerOne = playerOne;
+		this.playerTwo = playerTwo;
+		if(playerOne != null){
+			playerOne.initBoards();
+			setGameType(GameType.SERVER);
+		}
+		else if(playerTwo != null){
+			playerTwo.initBoards();
+			setGameType(GameType.CLIENT);
+		}
 	}
 	
 	public void shiftTurn(){
@@ -84,11 +83,22 @@ public class Game {
 		this.playerTwo = playerTwo;
 	}
 
-	public Player getPlayerInTurn() {
-		return playerInTurn;
+	public GameType getGameType() {
+		return gameType;
 	}
 
-	public void setPlayerInTurn(Player playerInTurn) {
-		this.playerInTurn = playerInTurn;
+	public void setGameType(GameType gameType) {
+		this.gameType = gameType;
 	}
+	
+	public Player getPlayerForGame(){
+		if(this.gameType == GameType.SERVER)
+			return playerOne;
+		else if(this.gameType == GameType.CLIENT)
+			return playerTwo;
+		
+		return playerOne;
+			
+	}
+	
 }
