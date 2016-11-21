@@ -28,6 +28,7 @@ public class Player {
 		this.name = name;
 		this.game = game;
 		ships = new ArrayList<Ship>();
+		isInTurn = false;
 	}
 	
 	// Getters and Setters
