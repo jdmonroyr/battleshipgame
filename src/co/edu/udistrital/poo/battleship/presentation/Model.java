@@ -249,7 +249,11 @@ public class Model implements Runnable{
 		
 		System.out.println("xCell: " + xCell + " yCell: " + yCell);
 		
-		enemyBoard = player.fire(xCell, yCell);
+		player.fire(xCell, yCell);
+		
+		getMainWindown().lblShotsQty.setText(String.valueOf(player.getShots()));
+		getMainWindown().lblHitsQty.setText(String.valueOf(player.getHits()));
+		getMainWindown().lblMissesQty.setText(String.valueOf(player.getMisses()));
 		
 	}
 	

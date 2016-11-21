@@ -16,6 +16,9 @@ public class Player {
 	private boolean isInTurn;
 	private Board ownBoard;
 	private Board enemyBoard;
+	private int shots = 0;
+	private int hits = 0;
+	private int misses = 0;
 	private List<Ship> ships;
 	
 	private Game game;
@@ -46,9 +49,12 @@ public class Player {
 	
 	////////////////
 	
-	public Board fire(int xPos, int yPos){
+	public CellState fire(int xPos, int yPos){
 		
 		Cell cell = enemyBoard.getCell(xPos, yPos);
+		
+		
+		// Call socket to fire;
 		
 		int max = 2;
 		int min = 1;
@@ -58,13 +64,20 @@ public class Player {
 		if(random == min){
 			cell.setState(CellState.MISS);
 			System.out.println("MISS!!!");
-			return enemyBoard;
 		}
 		else {
 			cell.setState(CellState.HIT);
 			System.out.println("HIT!!!");
-			return enemyBoard;
 		}
+		
+		shots++;
+		if(cell.getState() == CellState.HIT)
+			hits++;
+		else if(cell.getState() == CellState.MISS)
+			misses++;
+		
+		return cell.getState();
+		
 	}
 	
 	public boolean checkIfHit(int xPos, int yPos){
@@ -158,5 +171,17 @@ public class Player {
 		}
 		
 		return counterShips;
+	}
+
+	public int getShots() {
+		return shots;
+	}
+
+	public int getHits() {
+		return hits;
+	}
+
+	public int getMisses() {
+		return misses;
 	}
 }
