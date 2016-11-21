@@ -11,6 +11,6 @@ public interface ThreadBattleShip {
 	
 	public void setEnemyFire(String posX, String posY);
 	
-	public void setOwnFire();
+	public void setOwnFire(String posX, String posY);
 	
 }

@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.net.Socket;
 
 import co.edu.udistrital.poo.battleship.presentation.Model;
+import co.edu.udistrital.poo.battleship.presentation.Model.AttackResult;
 
 public class ThreadCliente implements Runnable, ThreadBattleShip{
 
@@ -64,8 +65,17 @@ public void initClientConnection() {
 		socketPlayer.sendMessage(SocketPlayer.COMANDO_ATK, posX, posY, salida);		
 	}
 
-	public void setOwnFire() {
-		
+	public void setOwnFire(String posX, String posY ) {
+		AttackResult ar = model.getFired(Integer.parseInt(posX), Integer.parseInt(posY));
+		String res="";
+		if(ar == AttackResult.MISS){
+			res="0";
+		}else if(ar ==AttackResult.HIT){
+			res="1";
+		}else if(ar ==AttackResult.GAME_OVER){
+			res="2";
+		}
+		socketPlayer.sendMessage(SocketPlayer.COMANDO_ATK, "OK", res, salida);	
 	}
 
 }
