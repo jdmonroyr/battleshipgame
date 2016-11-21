@@ -83,6 +83,10 @@ public class MainWindow extends JFrame {
 	JTextField txtXFire;
 	JTextField txtYFire;
 	
+	// Action Buttons
+	
+	JButton btnPlaceShipsButton;
+	
 	
 	/**
 	 * Create the frame.
@@ -624,9 +628,9 @@ public class MainWindow extends JFrame {
 		
 		// Action buttons for actions
 		
-		JButton btnNewButton = new JButton("Place Ships");
-		btnNewButton.setBounds(12, 614, 97, 25);
-		contentPane.add(btnNewButton);
+		btnPlaceShipsButton = new JButton("Place Ships");
+		btnPlaceShipsButton.setBounds(12, 614, 97, 25);
+		contentPane.add(btnPlaceShipsButton);
 		
 		JButton btnBeginGame = new JButton("Begin Game");
 		btnBeginGame.setBounds(121, 614, 112, 25);
@@ -645,6 +649,7 @@ public class MainWindow extends JFrame {
 		enemyBoardCanvas.addMouseListener(getEnemyBoardCanvasController());
 		mnCreate.addActionListener(getMainController());
 		mnJoin.addActionListener(getMainController());
+		btnPlaceShipsButton.addActionListener(getMainController());
 	}
 	
 	

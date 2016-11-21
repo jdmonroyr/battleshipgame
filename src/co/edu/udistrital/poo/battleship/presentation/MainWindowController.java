@@ -31,6 +31,9 @@ public class MainWindowController implements ActionListener {
 		else if(e.getActionCommand() == "Join"){
 			mainWindow.getModel().showDialogJoinGame();
 		}
+		else if(e.getActionCommand() == "Place Ships"){
+			mainWindow.getModel().startPlacingShips();
+		}
 
 	}
 

@@ -83,8 +83,10 @@ public class Board {
 					return false;
 				}
 			}
-			for (int i = xPos; i < xPos + ship.getType().getLength(); i++)
+			for (int i = xPos; i < xPos + ship.getType().getLength(); i++){
 				cells[i][yPos].setState(CellState.BOAT);
+				cells[i][yPos].setShip(ship);
+			}
 		}
 
 		else if (ship.getOrientation() == Ship.ShipOrientation.VERTICAL) {
@@ -100,8 +102,11 @@ public class Board {
 				}
 			}
 
-			for (int j = yPos; j < yPos + ship.getType().getLength(); j++)
+			for (int j = yPos; j < yPos + ship.getType().getLength(); j++){
 				cells[xPos][j].setState(CellState.BOAT);
+				cells[xPos][j].setShip(ship);
+			}
+				
 		}
 		
 		return true;

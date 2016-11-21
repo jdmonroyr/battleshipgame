@@ -17,6 +17,7 @@ import co.edu.udistrital.poo.battleship.bizlogic.Ship.ShipOrientation;
 import co.edu.udistrital.poo.battleship.bizlogic.Ship.ShipStatus;
 import co.edu.udistrital.poo.battleship.bizlogic.Ship.ShipType;
 import co.edu.udistrital.poo.battleship.bizlogic.Game;
+import co.edu.udistrital.poo.battleship.bizlogic.Game.GameShipsMax;
 import co.edu.udistrital.poo.battleship.bizlogic.Player;
 import co.edu.udistrital.poo.battleship.bizlogic.Ship;
 import co.edu.udistrital.poo.battleship.bizlogic.Sistema;
@@ -43,14 +44,6 @@ public class Model implements Runnable{
 		
 		getMainWindown().setSize(1280, 700);
 		getMainWindown().setVisible(true);
-		//drawingThread.start();
-		
-		//game = new Game();
-		//game.init();
-		
-		//Player activePlayer = game.getPlayerInTurn();
-		//enemyBoard = activePlayer.getEnemyBoard();
-		//ownBoard = activePlayer.getOwnBoard();
 		
 		getMainWindown().lblPlayerNameText.setText("no name yet");
 		getMainWindown().lblOpponentsNameText.setText("no name yet");
@@ -187,6 +180,7 @@ public class Model implements Runnable{
 			ship = new Ship(ShipType.DESTROYER);
 			
 		Player player = game.getPlayerForGame();
+		
 		int xCell = xPos / 40;
 		int yCell = yPos / 40;
 		
@@ -203,20 +197,40 @@ public class Model implements Runnable{
 		
 		painted = player.markBoat(xCell, yCell, ship);
 		
-		if(painted)
+		if(painted == false)
 			showMaxShipsPopUp();
+		else{
+			int left = 0;
+			if(ship.getType() == ShipType.BATTLESHIP){
+				left = GameShipsMax.BATTLESHIP.getQuantity() - player.getShipNumberForType(ShipType.BATTLESHIP); 
+				getMainWindown().lblBattleshipQty.setText(String.valueOf(left));
+			}
+			if(ship.getType() == ShipType.CRUISER){
+				left = GameShipsMax.CRUISER.getQuantity() - player.getShipNumberForType(ShipType.CRUISER);
+				getMainWindown().lblCruiserQty.setText(String.valueOf(left));
+			}
+			if(ship.getType() == ShipType.SUBMARINE){
+				left = GameShipsMax.SUBMARINE.getQuantity() - player.getShipNumberForType(ShipType.SUBMARINE);
+				getMainWindown().lblSubmarineQty.setText(String.valueOf(left));
+			}
+			if(ship.getType() == ShipType.DESTROYER){
+				left = GameShipsMax.DESTROYER.getQuantity() - player.getShipNumberForType(ShipType.DESTROYER);
+				getMainWindown().lblDestroyerQty.setText(String.valueOf(left));
+			}
+		}
 		
 	}
 	
 	public void fire(int xPos, int yPos){
 		
-		//Player activePlayer = game.getPlayerInTurn();
+		Player player = game.getPlayerForGame();
+		
 		int xCell = xPos / 40;
 		int yCell = yPos / 40;
 		
 		System.out.println("xCell: " + xCell + " yCell: " + yCell);
 		
-		//enemyBoard = activePlayer.fire(xCell, yCell);
+		enemyBoard = player.fire(xCell, yCell);
 		
 	}
 	
@@ -311,11 +325,13 @@ public class Model implements Runnable{
 	
 	public void showMaxShipsPopUp(){
 		
+		JOptionPane.showMessageDialog(getMainWindown(), "Se ha alcanzado el máximo número de barcos de ese tipo", "Error Message", JOptionPane.ERROR_MESSAGE);
+		
 	}
 	
 	// Pop up for server player
 
-		public void showDialogCreateGame() {
+	public void showDialogCreateGame() {
 
 			JTextField playerName = new JTextField("player 1");
 			JPanel panel = new JPanel(new GridLayout(0, 1));

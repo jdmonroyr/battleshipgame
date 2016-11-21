@@ -34,6 +34,7 @@ public class Ship {
 	public Ship(ShipType type){
 		this.type = type;
 		status = ShipStatus.FLOATING;
+		location = new ArrayList<Cell>();
 	}
 
 	public ShipType getType() {
@@ -76,6 +77,8 @@ public class Ship {
 		this.status = status;
 	}
 	
-	
-
+	public void addLocationCell(Cell cell){
+		location.add(cell);
+		
+	}
 }

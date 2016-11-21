@@ -145,7 +145,14 @@ public class Player {
 		return false;
 	}
 	
-	
-			
-
+	public int getShipNumberForType(ShipType shipType){
+		int counterShips = 0;
+		
+		for(Ship ownShip : ships){
+			if(ownShip.getType() == shipType)
+				counterShips++;
+		}
+		
+		return counterShips;
+	}
 }
