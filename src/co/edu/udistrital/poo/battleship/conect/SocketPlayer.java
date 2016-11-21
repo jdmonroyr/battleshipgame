@@ -7,6 +7,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 import co.edu.udistrital.poo.battleship.presentation.Model;
+import co.edu.udistrital.poo.battleship.presentation.Model.AttackResult;
 
 public class SocketPlayer {
 
@@ -52,9 +53,24 @@ public class SocketPlayer {
 					break;
 				case "ATK":
 					if(param1.equals("OK")){
-						
+						if(param2.equals("0")){
+						model.updateEnemyBoard(AttackResult.MISS);
+						}else if(param2.equals("1")){
+							model.updateEnemyBoard(AttackResult.HIT);
+						}else if(param2.equals("2")){
+							model.updateEnemyBoard(AttackResult.GAME_OVER);
+						}
 					}else if(!param1.equals("NK")){
-						
+						AttackResult ar = model.getFired(Integer.parseInt(param1), Integer.parseInt(param2));
+						String res="";
+						if(ar.equals(AttackResult.MISS)){
+							res="0";
+						}else if(ar.equals(AttackResult.HIT)){
+							res="1";
+						}if(ar.equals(AttackResult.GAME_OVER)){
+							res="2";
+						}
+						sendMessage(SocketPlayer.COMANDO_ATK, "OK", res, salida);
 					}
 					break;
 				default:

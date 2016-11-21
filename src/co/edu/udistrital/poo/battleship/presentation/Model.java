@@ -258,7 +258,7 @@ public class Model implements Runnable{
 		lastYShot = yCell;
 		
 		// send command to fire opponent
-		
+		hiloJuego.setEnemyFire(String.valueOf(xCell), String.valueOf(yCell));
 		/*Player player = game.getPlayerForGame();
 		player.fire(xCell, yCell, CellState.MISS);
 		
