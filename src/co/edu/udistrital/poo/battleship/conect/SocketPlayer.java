@@ -1,6 +1,5 @@
 package co.edu.udistrital.poo.battleship.conect;
 
-import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -47,6 +46,9 @@ public class SocketPlayer {
 					model.setOpponentName(param1);
 					break;
 				case "LIS":
+					if (param1=="OK") {
+						model.beginGame();	
+					}
 					break;
 				default:
 					break;
