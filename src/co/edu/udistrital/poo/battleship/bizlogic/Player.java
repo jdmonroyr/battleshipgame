@@ -184,4 +184,8 @@ public class Player {
 	public int getMisses() {
 		return misses;
 	}
+	
+	public List<Ship> getShips(){
+		return ships;
+	}
 }

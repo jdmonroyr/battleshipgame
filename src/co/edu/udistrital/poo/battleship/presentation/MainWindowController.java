@@ -34,6 +34,10 @@ public class MainWindowController implements ActionListener {
 		else if(e.getActionCommand() == "Place Ships"){
 			mainWindow.getModel().startPlacingShips();
 		}
+		
+		else if(e.getActionCommand() == "Begin Game"){
+			mainWindow.getModel().beginGame();
+		}
 
 	}
 

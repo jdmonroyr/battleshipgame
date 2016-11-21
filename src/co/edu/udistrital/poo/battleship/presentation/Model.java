@@ -413,4 +413,20 @@ public class Model implements Runnable{
 				System.out.println("Cancelled");
 			}
 		}
+		
+		public void beginGame(){
+			
+			int shipsNumber = GameShipsMax.BATTLESHIP.getQuantity() + GameShipsMax.CRUISER.getQuantity() +
+					GameShipsMax.SUBMARINE.getQuantity() + GameShipsMax.DESTROYER.getQuantity();
+			
+			Player player = game.getPlayerForGame();
+			if(player.getShips().size() != shipsNumber){
+				int left = shipsNumber - player.getShips().size();
+				showErrorPopUp("Faltan " + left + " barcos por posicionar.");
+			}
+			else {
+			
+			// call action command LIS
+			}
+		}
 }

@@ -86,6 +86,7 @@ public class MainWindow extends JFrame {
 	// Action Buttons
 	
 	JButton btnPlaceShipsButton;
+	JButton btnBeginGame;
 	
 	
 	/**
@@ -632,7 +633,7 @@ public class MainWindow extends JFrame {
 		btnPlaceShipsButton.setBounds(12, 614, 97, 25);
 		contentPane.add(btnPlaceShipsButton);
 		
-		JButton btnBeginGame = new JButton("Begin Game");
+		btnBeginGame = new JButton("Begin Game");
 		btnBeginGame.setBounds(121, 614, 112, 25);
 		contentPane.add(btnBeginGame);
 		
@@ -650,6 +651,7 @@ public class MainWindow extends JFrame {
 		mnCreate.addActionListener(getMainController());
 		mnJoin.addActionListener(getMainController());
 		btnPlaceShipsButton.addActionListener(getMainController());
+		btnBeginGame.addActionListener(getMainController());
 	}
 	
 	
@@ -680,53 +682,4 @@ public class MainWindow extends JFrame {
 	public Model getModel() {
 		return model;
 	}
-/*<<<<<<< HEAD
-
-	public void showPlayerDialog() {
-
-		JTextField playerName = new JTextField("player 1");
-		JPanel panel = new JPanel(new GridLayout(0, 1));
-		panel.add(new JLabel("Player Name:"));
-		panel.add(playerName);
-		int result = JOptionPane.showConfirmDialog(this, panel, "Create Game", JOptionPane.OK_CANCEL_OPTION,
-				JOptionPane.PLAIN_MESSAGE);
-		if (result == JOptionPane.OK_OPTION) {
-			if(playerName.getText().isEmpty()){
-				playerName.setText("player 1");
-			}
-			lblPlayerNameText.setText(playerName.getText());
-			getModel().initServer(playerName.getText());
-		} else {
-			System.out.println("Cancelled");
-		}
-	}
-
-	public void showServerDialog() {
-
-		JTextField playerName = new JTextField("player 2");
-		JTextField serverAddress = new JTextField("127.0.0.1");
-		JTextField serverPort = new JTextField("5000");
-
-		JPanel panelPlayerTwo = new JPanel(new GridLayout(0, 1));
-		panelPlayerTwo.add(new JLabel("Player Name:"));
-		panelPlayerTwo.add(playerName);
-		panelPlayerTwo.add(new JLabel("Server Address:"));
-		panelPlayerTwo.add(serverAddress);
-		panelPlayerTwo.add(new JLabel("Server Port:"));
-		panelPlayerTwo.add(serverPort);
-
-		int result = JOptionPane.showConfirmDialog(this, panelPlayerTwo, "Join Game", JOptionPane.OK_CANCEL_OPTION,
-				JOptionPane.PLAIN_MESSAGE);
-		if (result == JOptionPane.OK_OPTION) {
-			getModel().initClient(serverAddress.getText(), serverPort.getText(), playerName.getText());
-			System.out.println("Player name: " + playerName.getText());
-			System.out.println("Server Address: " + serverAddress.getText() + ":" + serverPort);
-		} else {
-			System.out.println("Cancelled");
-		}
-	}
-=======
-	
-	
->>>>>>> branch 'master' of https://github.com/jdmonroyr/battleshipgame.git*/
 }
