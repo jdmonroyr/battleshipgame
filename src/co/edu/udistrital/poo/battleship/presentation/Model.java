@@ -322,6 +322,10 @@ public class Model implements Runnable{
 		getMainWindown().lblOpponentsNameText.setText(name);
 	}
 	
+	public void setStatusText(String status){
+		getMainWindown().lblStatusText.setText(status);
+	}
+	
 	public void configServerPlayer(String playerName){
 				
 		game = new Game();
@@ -414,7 +418,7 @@ public class Model implements Runnable{
 			}
 		}
 		
-		public void beginGame(){
+		public void readyToBegin(){
 			
 			int shipsNumber = GameShipsMax.BATTLESHIP.getQuantity() + GameShipsMax.CRUISER.getQuantity() +
 					GameShipsMax.SUBMARINE.getQuantity() + GameShipsMax.DESTROYER.getQuantity();
@@ -424,9 +428,13 @@ public class Model implements Runnable{
 				int left = shipsNumber - player.getShips().size();
 				showErrorPopUp("Faltan " + left + " barcos por posicionar.");
 			}
-			else {			
-				getMainWindown().enemyBoardCanvas.addMouseListener(getMainWindown().getEnemyBoardCanvasController());
-			// call action command LIS
+			else {
+				hiloJuego.initGame();
+				setStatusText("waiting for opp ready");
 			}
+		}
+		
+		public void beginGame(){
+			getMainWindown().enemyBoardCanvas.addMouseListener(getMainWindown().getEnemyBoardCanvasController());
 		}
 }

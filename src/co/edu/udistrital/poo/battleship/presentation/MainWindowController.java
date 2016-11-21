@@ -36,7 +36,7 @@ public class MainWindowController implements ActionListener {
 		}
 		
 		else if(e.getActionCommand() == "Begin Game"){
-			mainWindow.getModel().beginGame();
+			mainWindow.getModel().readyToBegin();
 		}
 
 	}
