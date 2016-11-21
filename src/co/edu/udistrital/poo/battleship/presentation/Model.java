@@ -18,6 +18,7 @@ import co.edu.udistrital.poo.battleship.bizlogic.Ship.ShipStatus;
 import co.edu.udistrital.poo.battleship.bizlogic.Ship.ShipType;
 import co.edu.udistrital.poo.battleship.bizlogic.Game;
 import co.edu.udistrital.poo.battleship.bizlogic.Game.GameShipsMax;
+import co.edu.udistrital.poo.battleship.bizlogic.Game.GameType;
 import co.edu.udistrital.poo.battleship.bizlogic.Player;
 import co.edu.udistrital.poo.battleship.bizlogic.Player.PlacingShipsStatus;
 import co.edu.udistrital.poo.battleship.bizlogic.Ship;
@@ -251,20 +252,24 @@ public class Model implements Runnable{
 	
 	public void fire(int xPos, int yPos){
 		
-		int xCell = xPos / 40;
-		int yCell = yPos / 40;
+		Player player = game.getPlayerForGame();
+		if (player.isInTurn()){
 		
-		lastXShot = xCell;
-		lastYShot = yCell;
+			int xCell = xPos / 40;
+			int yCell = yPos / 40;
 		
-		// send command to fire opponent
-		hiloJuego.setEnemyFire(String.valueOf(xCell), String.valueOf(yCell));
-		/*Player player = game.getPlayerForGame();
-		player.fire(xCell, yCell, CellState.MISS);
+			lastXShot = xCell;
+			lastYShot = yCell;
+			hiloJuego.setEnemyFire(String.valueOf(xCell), String.valueOf(yCell));
+		}
 		
-		getMainWindown().lblShotsQty.setText(String.valueOf(player.getShots()));
-		getMainWindown().lblHitsQty.setText(String.valueOf(player.getHits()));
-		getMainWindown().lblMissesQty.setText(String.valueOf(player.getMisses()));*/
+		else{
+			showErrorPopUp("No se encuentra en turno.");
+		}
+		
+		//getMainWindown().lblShotsQty.setText(String.valueOf(player.getShots()));
+		//getMainWindown().lblHitsQty.setText(String.valueOf(player.getHits()));
+		//getMainWindown().lblMissesQty.setText(String.valueOf(player.getMisses()));
 		
 	}
 	
@@ -433,8 +438,13 @@ public class Model implements Runnable{
 		}
 		
 		public void beginGame(){
+			Player player = game.getPlayerForGame();
 			setStatusText("in game (my turn)");
 			getMainWindown().enemyBoardCanvas.addMouseListener(getMainWindown().getEnemyBoardCanvasController());
+			if(game.getGameType() == GameType.SERVER)
+				player.setTurn(true);
+			else if(game.getGameType() == GameType.CLIENT)
+				player.setTurn(false);
 		}
 		
 		public AttackResult getFired(int xCell, int yCell){
@@ -469,6 +479,10 @@ public class Model implements Runnable{
 			
 			Player player = game.getPlayerForGame();
 			player.updateAfterFire(lastXShot, lastYShot, attackResult);
+			
+			//if(player.isInTurn())
+				//player.setTurn(false);
+			
 			
 		}
 }
