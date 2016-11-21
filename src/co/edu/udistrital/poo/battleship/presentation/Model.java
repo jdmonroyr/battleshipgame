@@ -435,6 +435,7 @@ public class Model implements Runnable{
 		}
 		
 		public void beginGame(){
+			setStatusText("in game (my turn)");
 			getMainWindown().enemyBoardCanvas.addMouseListener(getMainWindown().getEnemyBoardCanvasController());
 		}
 }
